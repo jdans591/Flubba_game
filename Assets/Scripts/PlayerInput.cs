@@ -20,7 +20,7 @@ public class PlayerInput : MonoBehaviour {
 			yspeed = 10;
 		}
 
-		// update player velocity
+        // update player velocity
 		rb.velocity = new Vector2 (500 * xspeed, yspeed);
 	}
 }
