@@ -1,26 +1,55 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerInput : MonoBehaviour {
-	Rigidbody2D rb;
-	public KeyCode jump;
+/**
+ * NOTE: Uses basic ray-tracing template from https://github.com/SebLague/2DPlatformer-Tutorial/tree/master/Episode%2005
+ */
 
-	// Use this for initialization
-	void Start () {
-		rb = GetComponent<Rigidbody2D> ();
-	}
 
-	// Update is called once per frame
-	void Update () {
-		float xspeed = Input.GetAxisRaw("Horizontal") * Time.deltaTime;
-		float yspeed = rb.velocity.y;
+[RequireComponent(typeof(PlayerPhysics))]
+public class PlayerInput : MonoBehaviour
+{
 
-		// jumping
-		if (Input.GetKeyDown(jump)) {
-			yspeed = 10;
-		}
+    public float jumpHeight = 4;
+    public float timeToJumpApex = .6f;
+    float accelerationTimeAirborne = .2f;
+    float accelerationTimeGrounded = .1f;
+    float moveSpeed = 6;
 
-        // update player velocity
-		rb.velocity = new Vector2 (500 * xspeed, yspeed);
-	}
+    float gravity;
+    float jumpVelocity;
+    Vector3 velocity;
+    float velocityXSmoothing;
+
+    PlayerPhysics controller;
+
+    void Start()
+    {
+        controller = GetComponent<PlayerPhysics>();
+
+        gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
+        jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
+        print("Gravity: " + gravity + "  Jump Velocity: " + jumpVelocity);
+    }
+
+    void Update()
+    {
+
+        if (controller.collisions.above || controller.collisions.below)
+        {
+            velocity.y = 0;
+        }
+
+        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+        if (Input.GetKeyDown(KeyCode.Space) && controller.collisions.below)
+        {
+            velocity.y = jumpVelocity;
+        }
+
+        float targetVelocityX = input.x * moveSpeed;
+        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+        velocity.y += gravity * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
+    }
 }
