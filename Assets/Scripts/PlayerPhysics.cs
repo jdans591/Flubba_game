@@ -15,8 +15,8 @@ public class PlayerPhysics : MonoBehaviour
     public int horizontalRayCount = 4;
     public int verticalRayCount = 4;
 
-    float maxClimbAngle = 80;
-    float maxDescendAngle = 80;
+    float maxClimbAngle = 40;
+    float maxDescendAngle = 40;
 
     float horizontalRaySpacing;
     float verticalRaySpacing;
@@ -25,18 +25,27 @@ public class PlayerPhysics : MonoBehaviour
     RaycastOrigins raycastOrigins;
     public CollisionInfo collisions;
 
+	/**
+	 * Initialises the collider object that represents the player's hitbox and calculates how far 
+	 * apart the rays need to be placed along the collider based off of the number of rays.
+	 */
     void Start()
     {
         collider = GetComponent<BoxCollider2D>();
         CalculateRaySpacing();
     }
 
+	/**
+	 * Moves the player by the specified amount and accounts for collisions
+	 */
     public void Move(Vector3 velocity)
     {
+		//Updates where the rays originate from(the edges of the player model)
         UpdateRaycastOrigins();
         collisions.Reset();
         collisions.velocityOld = velocity;
 
+		//Update the collision object by checking the rays
         if (velocity.y < 0)
         {
             DescendSlope(ref velocity);
@@ -50,26 +59,34 @@ public class PlayerPhysics : MonoBehaviour
             VerticalCollisions(ref velocity);
         }
 
+		//Do the final movement of the player
         transform.Translate(velocity);
     }
 
+	/**
+	 * If there is movement in the x direction then we must check for any collisions on any of the rays
+	 */
     void HorizontalCollisions(ref Vector3 velocity)
     {
+		//Direction + length of rays which are based off the speed of the player
         float directionX = Mathf.Sign(velocity.x);
         float rayLength = Mathf.Abs(velocity.x) + skinWidth;
 
         for (int i = 0; i < horizontalRayCount; i++)
         {
+			//Draw all the rays on the correct face of the collider and check for any hits
             Vector2 rayOrigin = (directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
             rayOrigin += Vector2.up * (horizontalRaySpacing * i);
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
 
-            Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.red);
+			//Draws full-size rays
+            Debug.DrawRay(rayOrigin, Vector2.right * directionX, Color.red);
 
             if (hit)
             {
-
+				//Find the angle of the slope by the normal of the raycast hit 
                 float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+
 
                 if (i == 0 && slopeAngle <= maxClimbAngle)
                 {
@@ -105,6 +122,9 @@ public class PlayerPhysics : MonoBehaviour
         }
     }
 
+	/**
+	 * Casts the vertical rays to check for collisions
+	 */
     void VerticalCollisions(ref Vector3 velocity)
     {
         float directionY = Mathf.Sign(velocity.y);
@@ -116,7 +136,8 @@ public class PlayerPhysics : MonoBehaviour
             rayOrigin += Vector2.right * (verticalRaySpacing * i + velocity.x);
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
 
-            Debug.DrawRay(rayOrigin, Vector2.up * directionY * rayLength, Color.red);
+			//Draws full-size rays
+			Debug.DrawRay(rayOrigin, Vector2.up * directionY, Color.red);
 
             if (hit)
             {
@@ -152,6 +173,9 @@ public class PlayerPhysics : MonoBehaviour
         }
     }
 
+	/**
+	 * Handles the player movement on non-flat surfaces when ascending
+	 */
     void ClimbSlope(ref Vector3 velocity, float slopeAngle)
     {
         float moveDistance = Mathf.Abs(velocity.x);
@@ -167,6 +191,9 @@ public class PlayerPhysics : MonoBehaviour
         }
     }
 
+	/**
+	 * Handles the player movement on non-flat surfaces when descending
+	 */
     void DescendSlope(ref Vector3 velocity)
     {
         float directionX = Mathf.Sign(velocity.x);
@@ -196,6 +223,9 @@ public class PlayerPhysics : MonoBehaviour
         }
     }
 
+	/**
+	 * Updates where the rays originate from(the edges of the player model)
+	 */
     void UpdateRaycastOrigins()
     {
         Bounds bounds = collider.bounds;
@@ -207,6 +237,9 @@ public class PlayerPhysics : MonoBehaviour
         raycastOrigins.topRight = new Vector2(bounds.max.x, bounds.max.y);
     }
 
+	/**
+	 * Spaces the rays out so that they have equal distances between each and they cover the whole side of the collider.
+	 */
     void CalculateRaySpacing()
     {
         Bounds bounds = collider.bounds;
@@ -219,12 +252,18 @@ public class PlayerPhysics : MonoBehaviour
         verticalRaySpacing = bounds.size.x / (verticalRayCount - 1);
     }
 
+	/**
+	 * This struct stores the origin positions for the rays which includes the skinsWidth indentation
+	 */
     struct RaycastOrigins
     {
         public Vector2 topLeft, topRight;
         public Vector2 bottomLeft, bottomRight;
     }
 
+	/**
+	 * Handles each collision by assigning it to a type so that each case can be reponded to easily
+	 */
     public struct CollisionInfo
     {
         public bool above, below;
