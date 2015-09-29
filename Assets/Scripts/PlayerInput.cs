@@ -7,24 +7,26 @@ using System.Collections;
 
 
 [RequireComponent(typeof(PlayerPhysics))]
-public class PlayerInput : MonoBehaviour
+public class PlayerInput : MonoBehaviour 
 {
-
     public float jumpHeight = 4;
     public float timeToJumpApex = .6f;
     float accelerationTimeAirborne = .2f;
     float accelerationTimeGrounded = .1f;
     float moveSpeed = 6;
+    float wallSlidingSpeed = 1;
 
     float gravity;
     float jumpVelocity;
     Vector3 velocity;
     float velocityXSmoothing;
 
+    bool wallJump;
+    bool airCharge;
+
     PlayerPhysics controller;
 
-    void Start()
-    {
+    void Start() {
 		//The controller is what handles our movement in the game world
         controller = GetComponent<PlayerPhysics>();
 
@@ -32,6 +34,10 @@ public class PlayerInput : MonoBehaviour
         gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
         print("Gravity: " + gravity + "  Jump Velocity: " + jumpVelocity);
+
+        //Player ability setup
+        wallJump = false;
+        airCharge = true;
     }
 
 	/**
@@ -40,21 +46,50 @@ public class PlayerInput : MonoBehaviour
 	 * will provide information to the type of collision which can be used to test for jump validity, wall jumping etc.
 	 */
 
-    void Update()
-    {
+    void Update() {
+        Debug.Log(Input.GetAxisRaw("Horizontal"));
 		//Vertical collision detection
-        if (controller.collisions.above || controller.collisions.below)
-        {
+        if (controller.collisions.above || controller.collisions.below) {
             velocity.y = 0;
+            //If player lands, reset airCharge
+            if (controller.collisions.below) {
+                airCharge = true;
+            }
+        }
+
+        //Use side collisions 
+        if (controller.collisions.left || controller.collisions.right) {
+            if (velocity.y < 0) {
+                velocity.y = -wallSlidingSpeed;
+                wallJump = true;
+            }
+        }
+        else {
+            wallJump = false;
         }
 
 		//Get keyboard input
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
 		//Jumping
-        if (Input.GetKeyDown(KeyCode.Space) && controller.collisions.below)
-        {
-            velocity.y = jumpVelocity;
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            //On ground
+            if (controller.collisions.below) {
+                velocity.y = jumpVelocity;
+            }
+            //Wall jumping
+            else if (wallJump && Mathf.Abs(input.x) == 1) {
+                //Check that the jump direction is the opposite of the wall that is attached to
+                if ((input.x == -1 && controller.collisions.right) || (input.x == 1 && controller.collisions.left)) {
+                    velocity.y = jumpVelocity;
+                    velocity.x = input.x * moveSpeed;
+                }
+            }
+            //Double jump in air
+            else if (airCharge) {
+                airCharge = false;
+                velocity.y = jumpVelocity;
+            }
         }
 
         float targetVelocityX = input.x * moveSpeed;
