@@ -10,6 +10,7 @@
 [Ll]ibrary/
 sysinfo.txt
 *.stackdump
+ProjectSettings/ProjectVersion.txt
  
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
