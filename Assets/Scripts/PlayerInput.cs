@@ -51,7 +51,11 @@ public class PlayerInput : MonoBehaviour
 
     void Update() {
 
-        Debug.Log(Input.GetAxisRaw("Horizontal"));
+        /** The current definition of a vertical wall is a platform with at least approx 75 degrees of elevation from horizontal. 
+        
+        */
+
+        //Debug.Log(Input.GetAxisRaw("Horizontal"));
 
 		//Vertical collision detection. If the player touches the ground or ceiling set vertical velocity to zero.
         if (TouchingGround() || TouchingCeiling()) {
@@ -78,8 +82,9 @@ public class PlayerInput : MonoBehaviour
 
         //Ignore left button if the object is on the right wall, and ignore right button if the object is on the left wall. 
         //Also, if the down button is pressed while the object is on a wall, it will slightly move the object off it 
-        //and drop the object down.
-        if(TouchingWall())
+        //and drop the object down. (With the raycasting code the current definition of a wall is at least approx 75 degrees
+        //from horizontal). 
+        if(TouchingWall() && !TouchingGround())
         {
             
             if (TouchingRightWall())
