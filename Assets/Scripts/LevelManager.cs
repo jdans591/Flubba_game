@@ -7,9 +7,15 @@ public class LevelManager : MonoBehaviour {
     public GameObject currentCheckpoint;
     public GameObject flubba;
 
+    void Awake()
+    {
+        currentCheckpoint = startPoint;
+    }
+
 	// Use this for initialization
 	void Start () {
         Instantiate(flubba);
+        RespawnPlayer();
 	}
 	
 	// Update is called once per frame
