@@ -11,6 +11,7 @@ public class GameCamera : MonoBehaviour {
 	void Start () {
 		// Finding the camera by tag
         camObject = GameObject.FindGameObjectWithTag("MainCamera");
+        player = GameObject.FindGameObjectWithTag("Player");
     }
  
     // Update the camera position
