@@ -13,10 +13,10 @@ public class PauseMenu : MonoBehaviour {
 	void Update () {
 		if (isPaused) {
 			pauseMenuCanvas.SetActive (true);
-			Time.timeScale = 0;
+			Time.timeScale = 0f;
 		} else {
 			pauseMenuCanvas.SetActive (false);
-			Time.timeScale = 1;
+			Time.timeScale = 1f;
 		}
 			
 		if (Input.GetKeyDown(KeyCode.Escape)) {
