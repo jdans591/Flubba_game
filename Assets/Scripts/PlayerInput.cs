@@ -7,7 +7,7 @@ using System.Collections;
 
 
 [RequireComponent(typeof(PlayerPhysics))]
-public class PlayerInput : MonoBehaviour 
+public class PlayerInput : MonoBehaviour
 {
 
     public float jumpHeight = 4;
@@ -25,15 +25,21 @@ public class PlayerInput : MonoBehaviour
     bool wallJump;
     int airCharge;
 
+    private bool playerCanMove;
+    private float delay;
+
+    public DeathCount deathCount;
+    public int numberOfDeath;
+    
     PlayerPhysics controller;
 
 
     /**Initialisation */
     void Start() {
-		//The controller is what handles our movement in the game world
+        //The controller is what handles our movement in the game world
         controller = GetComponent<PlayerPhysics>();
 
-		//Gravity setup
+        //Gravity setup
         gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
         print("Gravity: " + gravity + "  Jump Velocity: " + jumpVelocity);
@@ -41,9 +47,16 @@ public class PlayerInput : MonoBehaviour
         //Player ability setup
         wallJump = false;
         airCharge = 0;
+
+        
+
+        playerCanMove = false;
+        delay = 3;
+        numberOfDeath = 0;
+        
     }
 
-	/**
+    /**
 	 * Update is called every frame in order to update the player with the user's input and calculate the next movment to be handled by the PlayerPhysics class.
 	 * Move() takes a Vector2 argument for the amount to be moved and carries it out on the player object. While an object is colliding with a surface, the controller.collisions field
 	 * will provide information to the type of collision which can be used to test for jump validity, wall jumping etc.
@@ -57,7 +70,29 @@ public class PlayerInput : MonoBehaviour
 
         //Debug.Log(Input.GetAxisRaw("Horizontal"));
 
-		//Vertical collision detection. If the player touches the ground or ceiling set vertical velocity to zero.
+   
+        //Delay for 3 seconds before the player can move.
+        if (playerCanMove == false)
+        {
+            if (Time.timeSinceLevelLoad > delay) {
+
+                playerCanMove = true;
+                    
+            } 
+            else
+            {
+                return;
+            }
+        }
+
+
+        //Get keyboard input
+        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+
+
+
+        //Vertical collision detection. If the player touches the ground or ceiling set vertical velocity to zero.
         if (TouchingGround() || TouchingCeiling()) {
             velocity.y = 0;
             //If player lands, reset airCharge
@@ -77,16 +112,15 @@ public class PlayerInput : MonoBehaviour
             wallJump = false;
         }
 
-		//Get keyboard input
-        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
 
         //Ignore left button if the object is on the right wall, and ignore right button if the object is on the left wall. 
         //Also, if the down button is pressed while the object is on a wall, it will slightly move the object off it 
         //and drop the object down. (With the raycasting code the current definition of a wall is at least approx 75 degrees
         //from horizontal). 
-        if(TouchingWall() && !TouchingGround())
+        if (TouchingWall() && !TouchingGround())
         {
-            
+
             if (TouchingRightWall())
             {
                 if (input.y == -1)
@@ -101,7 +135,7 @@ public class PlayerInput : MonoBehaviour
             }
             else if (TouchingLeftWall())
             {
-                if(input.y == -1)
+                if (input.y == -1)
                 {
                     velocity.x = moveSpeed / 100;
                 }
@@ -112,28 +146,28 @@ public class PlayerInput : MonoBehaviour
             }
 
         }
-       
+
 
         //When the jump button is pressed.
-        if (Input.GetKeyDown(KeyCode.Space)) 
+        if (Input.GetKeyDown(KeyCode.Space))
         {//Simply jump if the object is on the ground. 
-            if(TouchingGround())
+            if (TouchingGround())
             {
                 velocity.y = jumpVelocity;
             }//If the object is touching a wall, jump in the opposite direction.
-            else if(TouchingWall())
+            else if (TouchingWall())
             {
-                if(TouchingRightWall())
+                if (TouchingRightWall())
                 {
                     velocity.y = jumpVelocity;
                     velocity.x = -moveSpeed * (float)1.5;
-                } else if(TouchingLeftWall())
+                } else if (TouchingLeftWall())
                 {
                     velocity.y = jumpVelocity;
                     velocity.x = moveSpeed * (float)1.5;
                 }
             }
-            else if(airCharge == 1)
+            else if (airCharge == 1)
             {
                 velocity.y = jumpVelocity;
                 airCharge--;
@@ -164,12 +198,12 @@ public class PlayerInput : MonoBehaviour
         }
         */
         float targetVelocityX = input.x * moveSpeed;
-		//Player accelerates towards top speed in the direction specified by input
+        //Player accelerates towards top speed in the direction specified by input
         velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
         //Gravity is applied
-		velocity.y += gravity * Time.deltaTime;
+        velocity.y += gravity * Time.deltaTime;
 
-		//The controller is given a veloity to move the player by
+        //The controller is given a veloity to move the player by
         controller.Move(velocity * Time.deltaTime);
     }
 
@@ -190,7 +224,7 @@ public class PlayerInput : MonoBehaviour
     /**Helper function to check if the object is touching the ground or not. */
     bool TouchingGround()
     {
-        if(controller.collisions.below)
+        if (controller.collisions.below)
         {
             return true;
         } else
@@ -202,7 +236,7 @@ public class PlayerInput : MonoBehaviour
     /**Helper function to check if the object is touching either the left or the right side walls.  */
     bool TouchingWall()
     {
-        if(controller.collisions.left || controller.collisions.right)
+        if (controller.collisions.left || controller.collisions.right)
         {
             return true;
         } else
@@ -214,7 +248,7 @@ public class PlayerInput : MonoBehaviour
     /**Helper function to check if the object is touching the right hand side wall.  */
     bool TouchingRightWall()
     {
-        if(controller.collisions.right)
+        if (controller.collisions.right)
         {
             return true;
         }
@@ -223,11 +257,11 @@ public class PlayerInput : MonoBehaviour
             return false;
         }
     }
-    
+
     /**Helper function to check if the object is touching the left hand side wall.  */
     bool TouchingLeftWall()
     {
-        if(controller.collisions.left)
+        if (controller.collisions.left)
         {
             return true;
         } else
@@ -240,7 +274,7 @@ public class PlayerInput : MonoBehaviour
     /**Helper function to check if the object is touching the ceiling or not.  */
     bool TouchingCeiling()
     {
-        if(controller.collisions.above)
+        if (controller.collisions.above)
         {
             return true;
         } else
@@ -248,4 +282,25 @@ public class PlayerInput : MonoBehaviour
             return false;
         }
     }
+
+    bool ButtonPressed(Vector2 input)
+    {
+        if (input.x != 0 || input.y != 0 || Input.GetKeyDown(KeyCode.Space))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        } 
+         
+    }
+
+    IEnumerator Wait(float second)
+    {
+        print(Time.time);
+        yield return new WaitForSeconds(second);
+        print(Time.time);
+    }
+  
 }
