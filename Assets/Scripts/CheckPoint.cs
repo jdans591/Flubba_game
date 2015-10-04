@@ -4,7 +4,7 @@ using System.Collections;
 public class CheckPoint : MonoBehaviour {
 
     public LevelManager levelManager;
-    private bool isChecked = false;
+    public bool isChecked = false;
 
 	// Use this for initialization
 	void Start () {
@@ -18,7 +18,7 @@ public class CheckPoint : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.name == "Player" && !isChecked)
+        if (other.gameObject.tag == "Player" && !isChecked)
         {
             levelManager.currentCheckpoint = gameObject;
             isChecked = true;
