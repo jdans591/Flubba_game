@@ -14,11 +14,11 @@ public class LevelManager : MonoBehaviour {
     void Awake()
     {
         currentCheckpoint = startPoint;
+        Instantiate(flubba);
     }
 
 	// Use this for initialization
 	void Start () {
-        Instantiate(flubba);
         currentFlubba = GameObject.Find("Player(Clone)");
         RespawnPlayer();
         numberOfDeath = 0;
