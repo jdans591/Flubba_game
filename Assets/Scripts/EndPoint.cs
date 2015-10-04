@@ -20,14 +20,16 @@ public class EndPoint : MonoBehaviour {
 	void Update () {
 		if (isPaused) {
 			Time.timeScale = 0f;
+		} else {
+			Time.timeScale = 1f;
 		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.tag == "Player") {
 			PlaySound (0);
-			isPaused = true;
 			pauseMenu.disabled = true;
+			isPaused = true;
 			StartCoroutine(Example());
 			endMenu.display();
 			endMenuCanvas.SetActive(true);
