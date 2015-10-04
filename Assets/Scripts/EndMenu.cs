@@ -9,7 +9,7 @@ public class EndMenu : MonoBehaviour {
     public Text timeText;
     public Text scoreText;
     public CoinCount coinCount;
-    public TimeControl time;
+	public TimeControl timeControl;
 
     private string finalTime;
     private int numCoin;
@@ -19,13 +19,22 @@ public class EndMenu : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        finalTime = time.text.text;
-        numCoin = coinCount.coinCount;
+        //finalTime = countDown.text.text;
+        //numCoin = coinCount.coinCount;
 
-        coinText.text = numCoin.ToString() + "/100";
-        timeText.text = finalTime;
-        scoreText.text = "10000";
+        //coinText.text = numCoin.ToString() + "/5";
+        //timeText.text = finalTime;
+        //scoreText.text = "10000";
     }
+
+	public void display(){
+		finalTime = timeControl.text.text;
+		numCoin = coinCount.coinCount;
+		
+		coinText.text = numCoin.ToString() + "/5";
+		timeText.text = finalTime;
+		scoreText.text = "10000";
+	}
     
     public void backToMainMenu()
     {
@@ -34,11 +43,11 @@ public class EndMenu : MonoBehaviour {
 
     public void replayTheStage()
     {
-        Application.LoadLevel("basic_level");
+        Application.LoadLevel("level1");
     }
 
     public void continueWithNext()
     {
-        Application.LoadLevel("");
+        Application.LoadLevel("level_select");
     }
 }
