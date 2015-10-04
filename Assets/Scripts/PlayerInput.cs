@@ -31,7 +31,10 @@ public class PlayerInput : MonoBehaviour
     public DeathCount deathCount;
     public int numberOfDeath;
 
+	public AudioClip[] audioClip;
+
     PlayerPhysics controller;
+	AudioSource audio;
 
 
     /**Initialisation */
@@ -39,6 +42,8 @@ public class PlayerInput : MonoBehaviour
     {
         //The controller is what handles our movement in the game world
         controller = GetComponent<PlayerPhysics>();
+
+		audio = GetComponent<AudioSource> ();
 
         //Gravity setup
         gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
@@ -145,10 +150,12 @@ public class PlayerInput : MonoBehaviour
             { //Simply jump if the object is on the ground. 
                 if (TouchingGround())
                 {
+					PlaySound(0);
                     velocity.y = jumpVelocity;
                 }//If the object is touching a wall, jump in the opposite direction.
                 else if (TouchingWall())
                 {
+					PlaySound(0);
                     if (TouchingRightWall())
                     {
                         velocity.y = jumpVelocity;
@@ -162,6 +169,7 @@ public class PlayerInput : MonoBehaviour
                 }
                 else if (airCharge == 1)
                 {
+					PlaySound(0);
                     velocity.y = jumpVelocity;
                     velocity.x = moveSpeed * input.x;
                     airCharge--;
@@ -213,4 +221,16 @@ public class PlayerInput : MonoBehaviour
     {
         return (controller.collisions.above);
     }
+
+	void PlaySound(int clip)
+	{
+		audio.clip = audioClip [clip];
+		audio.Play ();
+	}
+
+	void OnTriggerEnter2D(Collider2D other){
+		if (other.tag == "Coin") {
+			PlaySound (1);
+		}
+	}
 }

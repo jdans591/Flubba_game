@@ -24,9 +24,9 @@ public class EndMenu : MonoBehaviour {
 
         coinText.text = numCoin.ToString() + "/100";
         timeText.text = finalTime;
+        scoreText.text = "10000";
     }
-
-    // Update is called once per frame
+    
     public void backToMainMenu()
     {
         Application.LoadLevel("main_menu");
