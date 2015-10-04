@@ -19,13 +19,13 @@ public class Level1Helper : MonoBehaviour {
 		if (gameObject.tag == "Helper1") {
 			helperText.setText("Press spacebar to jump.");
 		} else if (gameObject.tag == "Helper2") {
-			helperText.setText("Press spacebar twice rapidily to double jump.");
+			helperText.setText("Press spacebar twice rapidly to double jump.");
 		} else if (gameObject.tag == "Helper3") {
 			helperText.setText("Collect coins for bonus rewards!");
 		} else if (gameObject.tag == "Helper4") {
-			helperText.setText("Becareful not to fall! There will be penalities");
+			helperText.setText("Be careful not to fall! There will be penalities");
 		} else if (gameObject.tag == "Helper5") {
-			helperText.setText("You can stick onto walls and jump off them continuosly");
+			helperText.setText("You can stick onto walls and jump off them continuously");
 		}
 	}
 }
