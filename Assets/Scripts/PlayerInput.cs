@@ -227,4 +227,10 @@ public class PlayerInput : MonoBehaviour
 		audio.clip = audioClip [clip];
 		audio.Play ();
 	}
+
+	void OnTriggerEnter2D(Collider2D other){
+		if (other.tag == "Coin") {
+			PlaySound (1);
+		}
+	}
 }
