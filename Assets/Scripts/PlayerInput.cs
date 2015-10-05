@@ -7,8 +7,8 @@ using System.Collections;
 
 
 [RequireComponent(typeof(PlayerPhysics))]
-public class PlayerInput : MonoBehaviour
-{
+[RequireComponent(typeof(LevelManager))]
+public class PlayerInput : MonoBehaviour {
 
     float jumpHeight = 3f;
     float timeToJumpApex = .4f;
@@ -42,7 +42,6 @@ public class PlayerInput : MonoBehaviour
     {
         //The controller is what handles our movement in the game world
         controller = GetComponent<PlayerPhysics>();
-
 		audio = GetComponent<AudioSource> ();
 
         //Gravity setup
@@ -68,16 +67,11 @@ public class PlayerInput : MonoBehaviour
     void Update()
     {
         //Delay for 3 seconds before the player can move.
-        if (playerCanMove == false)
-        {
-            if (Time.timeSinceLevelLoad > delay)
-            {
-
+        if (playerCanMove == false) {
+            if (Time.timeSinceLevelLoad > delay) {
                 playerCanMove = true;
-
             }
-            else
-            {
+            else {
                 return;
             }
         }
