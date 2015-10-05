@@ -31,7 +31,6 @@ public class LevelManager : MonoBehaviour {
 
     public void RespawnPlayer()
     {
-        Debug.Log("Player respawned");
         currentFlubba.transform.position = currentCheckpoint.transform.position;
     }
 
@@ -39,9 +38,13 @@ public class LevelManager : MonoBehaviour {
     {
         if (other.gameObject.tag == "Player")
         {
-            deathCount.deathCount++;
-            RespawnPlayer();
+			HandleDeath();
         }
         Debug.Log("object left the game area");
     }
+
+	public void HandleDeath() {
+		deathCount.deathCount++;
+		RespawnPlayer();
+	}
 }
