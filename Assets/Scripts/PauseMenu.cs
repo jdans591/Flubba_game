@@ -11,7 +11,7 @@ public class PauseMenu : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (disabled == false){
+		if (disabled == false) {
 			if (isPaused) {
 				pauseMenuCanvas.SetActive (true);
 				Time.timeScale = 0f;
@@ -20,17 +20,17 @@ public class PauseMenu : MonoBehaviour {
 				Time.timeScale = 1f;
 			}
 				
-			if (Input.GetKeyDown(KeyCode.Escape)) {
+			if (Input.GetKeyDown (KeyCode.Escape)) {
 				isPaused = !isPaused;
 			}
 		}
 	}
 
-	public void resume(){
+	public void resume () {
 		isPaused = !isPaused;
 	}
 
-	public void backToMainMenu(){
-		Application.LoadLevel("main_menu");
+	public void backToMainMenu () {
+		Application.LoadLevel ("main_menu");
 	}
 }

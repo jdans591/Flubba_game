@@ -25,24 +25,23 @@ public class EndPoint : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerEnter2D(Collider2D other){
+	void OnTriggerEnter2D (Collider2D other) {
 		if (other.tag == "Player") {
 			PlaySound (0);
 			pauseMenu.disabled = true;
 			isPaused = true;
-			StartCoroutine(Example());
-			endMenu.display();
-			endMenuCanvas.SetActive(true);
+			StartCoroutine (Example ());
+			endMenu.display ();
+			endMenuCanvas.SetActive (true);
 		}
 	}
 
-	void PlaySound(int clip)
-	{
+	void PlaySound (int clip) {
 		audio.clip = audioClip [clip];
 		audio.Play ();
 	}
 
-	IEnumerator Example() {
-		yield return new WaitForSeconds(30);
+	IEnumerator Example () {
+		yield return new WaitForSeconds (30);
 	}
 }

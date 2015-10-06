@@ -2,49 +2,44 @@
 using System.Collections;
 
 public class LevelManager : MonoBehaviour {
+	public GameObject startPoint;
+	public GameObject currentCheckpoint;
+	public GameObject flubba;
+	private GameObject currentFlubba;
 
-    public GameObject startPoint;
-    public GameObject currentCheckpoint;
-    public GameObject flubba;
-    private GameObject currentFlubba;
+	public DeathCount deathCount;
+	public int numberOfDeath;
 
-    public DeathCount deathCount;
-    public int numberOfDeath;
-
-    void Awake()
-    {
-        currentCheckpoint = startPoint;
-        Instantiate(flubba);
-    }
+	void Awake () {
+		currentCheckpoint = startPoint;
+		Instantiate (flubba);
+	}
 
 	// Use this for initialization
 	void Start () {
-        currentFlubba = GameObject.Find("Player(Clone)");
-        RespawnPlayer();
-        numberOfDeath = 0;
-    }
+		currentFlubba = GameObject.Find ("Player(Clone)");
+		RespawnPlayer ();
+		numberOfDeath = 0;
+	}
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
 
-    public void RespawnPlayer()
-    {
-        currentFlubba.transform.position = currentCheckpoint.transform.position;
-    }
+	public void RespawnPlayer () {
+		currentFlubba.transform.position = currentCheckpoint.transform.position;
+	}
 
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-			HandleDeath();
-        }
-        Debug.Log("object left the game area");
-    }
+	void OnTriggerExit2D (Collider2D other) {
+		if (other.gameObject.tag == "Player") {
+			HandleDeath ();
+		}
+		Debug.Log ("object left the game area");
+	}
 
-	public void HandleDeath() {
+	public void HandleDeath () {
 		deathCount.deathCount++;
-		RespawnPlayer();
+		RespawnPlayer ();
 	}
 }
