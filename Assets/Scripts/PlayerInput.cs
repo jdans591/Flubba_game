@@ -14,7 +14,7 @@ public class PlayerInput : MonoBehaviour {
 	float accelerationTimeAirborne = .35f; //
 	float accelerationTimeGrounded = .08f;
 	float moveSpeed = 6;
-	float wallSlidingSpeed = 1;
+	float slidingCoefficient = 0.2f;
 
 	float gravity;
 	float jumpVelocity;
@@ -23,13 +23,14 @@ public class PlayerInput : MonoBehaviour {
 
 	bool wallJump;
 	int airCharge;
+	bool collisionEnter;
+	bool collisionContinuing;
 
 	private bool playerCanMove;
 	private float delay;
 
 	public DeathCount deathCount;
 	public int numberOfDeath;
-
 	public AudioClip[] audioClip;
 
 	PlayerPhysics controller;
@@ -49,11 +50,12 @@ public class PlayerInput : MonoBehaviour {
 		wallJump = false;
 		airCharge = 0;
 
-
-
 		playerCanMove = false;
 		delay = 3;
 		numberOfDeath = 0;
+
+		collisionEnter = false;
+		collisionContinuing = false;
 	}
 
 	/**
@@ -62,100 +64,116 @@ public class PlayerInput : MonoBehaviour {
 	 * will provide information to the type of collision which can be used to test for jump validity, wall jumping etc.
 	 */
 	void Update () {
-		//Delay for 3 seconds before the player can move.
-		if (playerCanMove == false) {
-			if (Time.timeSinceLevelLoad > delay) {
-				playerCanMove = true;
-			} else {
-				return;
+
+		//Handle cases where player cannot recieve input or move
+		if (IsWaiting () || IsPaused ()) {
+			return;
+		}
+
+		//Check for side collisions on the first fram that they occur.
+		//collisionEnter is only true on the first fram of a side collision
+		if (TouchingWall () && !collisionContinuing) {
+			collisionEnter = true;
+			collisionContinuing = true;
+		} else if (TouchingWall () && collisionContinuing) {
+			collisionEnter = false;
+		} else if (!TouchingWall ()) {
+			collisionEnter = false;
+			collisionContinuing = false;
+		}
+
+		// The current definition of a vertical wall is a platform with at least approx 75 degrees of elevation from horizontal.
+		//Vertical collision detection. If the player touches the ground or ceiling set vertical velocity to zero.
+		if (TouchingCeiling () || TouchingGround ()) {
+			velocity.y = 0;
+			//If player lands, reset airCharge
+			if (TouchingGround ()) {
+				airCharge = 1;
 			}
 		}
-		// This if statement check whether the game is paused or not.
-		if (Time.timeScale != 0f) {
 
-			// The current definition of a vertical wall is a platform with at least approx 75 degrees of elevation from horizontal. 
+		//Get keyboard input
+		Vector2 input = new Vector2 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
 
-			//Vertical collision detection. If the player touches the ground or ceiling set vertical velocity to zero.
-			if (TouchingGround () || TouchingCeiling ()) {
-				velocity.y = 0;
-				//If player lands, reset airCharge
-				if (TouchingGround ()) {
-					airCharge = 1;
+		//Ignore left button if the object is on the right wall, and ignore right button if the object is on the left wall. 
+		//Also, if the down button is pressed while the object is on a wall, it will slightly move the object off it 
+		//and drop the object down. (With the raycasting code the current definition of a wall is at least approx 75 degrees
+		//from horizontal). 
+		if (TouchingWall () && !TouchingGround ()) {
+			if (TouchingRightWall ()) {
+				if (input.y == -1) {
+					velocity.x = -moveSpeed / 100;
+				}
+				if (input.x == -1) {
+					input.x = 0;
+				}
+			} else if (TouchingLeftWall ()) {
+				if (input.y == -1) {
+					velocity.x = moveSpeed / 100;
+				}
+				if (input.x == 1) {
+					input.x = 0;
 				}
 			}
+		}
 
-			//Use side collisions. Player will slide down the wall at a constant value. 
-			if (TouchingWall ()) {
-				if (velocity.y < 0) {
-					velocity.y = -wallSlidingSpeed;
-					wallJump = true;
-				}
-			} else {
-				wallJump = false;
-			}
-
-			//Get keyboard input
-			Vector2 input = new Vector2 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
-
-			//Ignore left button if the object is on the right wall, and ignore right button if the object is on the left wall. 
-			//Also, if the down button is pressed while the object is on a wall, it will slightly move the object off it 
-			//and drop the object down. (With the raycasting code the current definition of a wall is at least approx 75 degrees
-			//from horizontal). 
-			if (TouchingWall () && !TouchingGround ()) {
+		//When the jump button is pressed.
+		if (Input.GetKeyDown (KeyCode.Space)) { //Simply jump if the object is on the ground. 
+			if (TouchingGround ()) {
+				PlaySound (0);
+				velocity.y = jumpVelocity;
+			}//If the object is touching a wall, jump in the opposite direction.
+            else if (TouchingWall ()) {
+				PlaySound (0);
 				if (TouchingRightWall ()) {
-					if (input.y == -1) {
-						velocity.x = -moveSpeed / 100;
-					}
-					if (input.x == -1) {
-						input.x = 0;
-					}
+					velocity.y = jumpVelocity;
+					velocity.x = -moveSpeed * (float)1.5;
 				} else if (TouchingLeftWall ()) {
-					if (input.y == -1) {
-						velocity.x = moveSpeed / 100;
-					}
-					if (input.x == 1) {
-						input.x = 0;
-					}
-				}
-			}
-
-			//When the jump button is pressed.
-			if (Input.GetKeyDown (KeyCode.Space)) { //Simply jump if the object is on the ground. 
-				if (TouchingGround ()) {
-					PlaySound (0);
 					velocity.y = jumpVelocity;
-				}//If the object is touching a wall, jump in the opposite direction.
-                else if (TouchingWall ()) {
-					PlaySound (0);
-					if (TouchingRightWall ()) {
-						velocity.y = jumpVelocity;
-						velocity.x = -moveSpeed * (float)1.5;
-					} else if (TouchingLeftWall ()) {
-						velocity.y = jumpVelocity;
-						velocity.x = moveSpeed * (float)1.5;
-					}
-				} else if (airCharge == 1) {
-					PlaySound (0);
-					velocity.y = jumpVelocity;
-					velocity.x = moveSpeed * input.x;
-					airCharge--;
+					velocity.x = moveSpeed * (float)1.5;
 				}
+			} else if (airCharge == 1) {
+				PlaySound (0);
+				velocity.y = jumpVelocity;
+				velocity.x = moveSpeed * input.x;
+				airCharge--;
 			}
-
-			float targetVelocityX = input.x * moveSpeed;
-			//Player accelerates towards top speed in the direction specified by input
-			velocity.x = Mathf.SmoothDamp (velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
-			//Gravity is applied
-			velocity.y += gravity * Time.deltaTime;
-
-			//The controller is given a veloity to move the player by
-			controller.Move (velocity * Time.deltaTime);
 		}
+
+		float targetVelocityX = input.x * moveSpeed;
+		//Player accelerates towards top speed in the direction specified by input
+		velocity.x = Mathf.SmoothDamp (velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+
+		//Gravity is applied
+		if (TouchingWall () && velocity.y < 2) {
+			//Reset wall sliding speed if the player is falling faster than the sliding speed.
+			if (collisionEnter && velocity.y < 0) {
+				velocity.y = 0;
+			}
+			velocity.y += gravity * Time.deltaTime * slidingCoefficient;
+			wallJump = true;
+		} else {
+			velocity.y += gravity * Time.deltaTime;
+			wallJump = false;
+		}
+
+		//The controller is given a veloity to move the player by
+		controller.Move (velocity * Time.deltaTime);
 	}
 
 	//#################
 	// Helper funcitons
 	//#################
+
+	//Return true if the player is waiting to move
+	bool IsWaiting () {
+		return Time.timeSinceLevelLoad < delay;
+	}
+
+	//Returns true if the game is paused
+	bool IsPaused () {
+		return Time.timeScale == 0f;
+	}
 
 	//Helper function to check if the object is touching the ground.
 	bool TouchingGround () {
