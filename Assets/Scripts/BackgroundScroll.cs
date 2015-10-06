@@ -1,56 +1,50 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BackgroundScroll : MonoBehaviour
-{
-    public GameObject player;
-    Vector3 lastPosition;
-    Vector3 initialPosition;
+public class BackgroundScroll : MonoBehaviour {
 
-    void Start()
-    {
-        lastPosition = player.transform.position;
-        initialPosition = lastPosition;
-    }
+	public GameObject player;
+	Vector3 lastPosition;
+	Vector3 initialPosition;
 
-    void FixedUpdate()
-    {
+	void Start () {
+		lastPosition = player.transform.position;
+		initialPosition = lastPosition;
+	}
 
-        float speedX = ((player.transform.position.x - lastPosition.x) / Time.deltaTime);
-        float speedY = ((player.transform.position.y - lastPosition.y) / Time.deltaTime);
+	void FixedUpdate () {
 
-        if (Camera.main.transform.position == initialPosition)
-        {
-            float fX = player.transform.position.x - initialPosition.x;
-            float fY = player.transform.position.y - initialPosition.y;
-            transform.Translate(-fX, -fY, 0);
-        }
+		float speedX = ((player.transform.position.x - lastPosition.x) / Time.deltaTime);
+		float speedY = ((player.transform.position.y - lastPosition.y) / Time.deltaTime);
 
-        //if moved to the left
-        if (speedX < 0) {
-            transform.Translate(-Vector3.left * 5 *Time.deltaTime, player.transform);
-        //if not moved from the start position
-        } else if (speedX == 0) {
-            //do nothing
-        //if moved to the right
-        } else {
-            transform.Translate(-Vector3.right * 5 * Time.deltaTime, player.transform);
-        }
+		if (Camera.main.transform.position == initialPosition) {
+			float fX = player.transform.position.x - initialPosition.x;
+			float fY = player.transform.position.y - initialPosition.y;
+			transform.Translate (-fX, -fY, 0);
+		}
 
-        //if moving downwards
-        if (speedY < 0)
-        {
-            transform.Translate(-Vector3.down * 5 * Time.deltaTime, player.transform);
-        //if not moving vertically
-        } else if (speedY == 0)
-        {
-            // do nothing
-        //if moving upwards
-        } else
-        {
-           transform.Translate(-Vector3.up * 5 * Time.deltaTime, player.transform);
-        }
+		//if moved to the left
+		if (speedX < 0) {
+			transform.Translate (-Vector3.left * 5 * Time.deltaTime, player.transform);
+			//if not moved from the start position
+		} else if (speedX == 0) {
+			//do nothing
+			//if moved to the right
+		} else {
+			transform.Translate (-Vector3.right * 5 * Time.deltaTime, player.transform);
+		}
 
-        lastPosition = player.transform.position;
-    }
+		//if moving downwards
+		if (speedY < 0) {
+			transform.Translate (-Vector3.down * 5 * Time.deltaTime, player.transform);
+			//if not moving vertically
+		} else if (speedY == 0) {
+			// do nothing
+			//if moving upwards
+		} else {
+			transform.Translate (-Vector3.up * 5 * Time.deltaTime, player.transform);
+		}
+
+		lastPosition = player.transform.position;
+	}
 }

@@ -3,12 +3,12 @@ using System.Collections;
 
 public class CheckPoint : MonoBehaviour {
 
-    public LevelManager levelManager;
-    public bool isChecked = false;
+	public LevelManager levelManager;
+	public bool isChecked = false;
 
 	// Use this for initialization
 	void Start () {
-        levelManager = FindObjectOfType<LevelManager>();
+		levelManager = FindObjectOfType<LevelManager> ();
 	}
 	
 	// Update is called once per frame
@@ -16,12 +16,10 @@ public class CheckPoint : MonoBehaviour {
 	    
 	}
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Player" && !isChecked)
-        {
-            levelManager.currentCheckpoint = gameObject;
-            isChecked = true;
-        }
-    }
+	void OnTriggerEnter2D (Collider2D other) {
+		if (other.gameObject.tag == "Player" && !isChecked) {
+			levelManager.currentCheckpoint = gameObject;
+			isChecked = true;
+		}
+	}
 }
