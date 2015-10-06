@@ -11,22 +11,21 @@ public class PlayerInput : MonoBehaviour {
 
 	float jumpHeight = 3f;
 	float timeToJumpApex = .4f;
-	float accelerationTimeAirborne = .35f; //
 	float accelerationTimeGrounded = .08f;
 	float moveSpeed = 6;
 	float slidingCoefficient = 0.2f;
+	float airborneAccelSlow = .35f;
+	float airborneAccelFast = 0.13f;
 
 	float gravity;
 	float jumpVelocity;
-	Vector3 velocity;
 	float velocityXSmoothing;
-
-	bool wallJump;
-	int airCharge;
+	float accelerationTimeAirborne;
+	float airCharge;
+	Vector3 velocity;
 	bool collisionEnter;
 	bool collisionContinuing;
 
-	private bool playerCanMove;
 	private float delay;
 
 	public DeathCount deathCount;
@@ -45,15 +44,16 @@ public class PlayerInput : MonoBehaviour {
 		//Gravity setup
 		gravity = -(2 * jumpHeight) / Mathf.Pow (timeToJumpApex, 2);
 		jumpVelocity = Mathf.Abs (gravity) * timeToJumpApex;
+		accelerationTimeAirborne = airborneAccelFast;
 
 		//Player ability setup
-		wallJump = false;
 		airCharge = 0;
 
-		playerCanMove = false;
+		//Delay and player statistics
 		delay = 3;
 		numberOfDeath = 0;
 
+		//Collision checking for wall sliding speed
 		collisionEnter = false;
 		collisionContinuing = false;
 	}
@@ -70,17 +70,8 @@ public class PlayerInput : MonoBehaviour {
 			return;
 		}
 
-		//Check for side collisions on the first fram that they occur.
-		//collisionEnter is only true on the first fram of a side collision
-		if (TouchingWall () && !collisionContinuing) {
-			collisionEnter = true;
-			collisionContinuing = true;
-		} else if (TouchingWall () && collisionContinuing) {
-			collisionEnter = false;
-		} else if (!TouchingWall ()) {
-			collisionEnter = false;
-			collisionContinuing = false;
-		}
+		//Checks if the player just collided with a wall to reset vertical sliding speed
+		CheckCollisions ();
 
 		// The current definition of a vertical wall is a platform with at least approx 75 degrees of elevation from horizontal.
 		//Vertical collision detection. If the player touches the ground or ceiling set vertical velocity to zero.
@@ -121,10 +112,12 @@ public class PlayerInput : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Space)) { //Simply jump if the object is on the ground. 
 			if (TouchingGround ()) {
 				PlaySound (0);
+				accelerationTimeAirborne = airborneAccelFast; //Update direction change speed
 				velocity.y = jumpVelocity;
 			}//If the object is touching a wall, jump in the opposite direction.
             else if (TouchingWall ()) {
 				PlaySound (0);
+				accelerationTimeAirborne = airborneAccelSlow; //Update direction change speed
 				if (TouchingRightWall ()) {
 					velocity.y = jumpVelocity;
 					velocity.x = -moveSpeed * (float)1.5;
@@ -134,6 +127,7 @@ public class PlayerInput : MonoBehaviour {
 				}
 			} else if (airCharge == 1) {
 				PlaySound (0);
+				accelerationTimeAirborne = airborneAccelFast; //Update direction change speed
 				velocity.y = jumpVelocity;
 				velocity.x = moveSpeed * input.x;
 				airCharge--;
@@ -146,19 +140,34 @@ public class PlayerInput : MonoBehaviour {
 
 		//Gravity is applied
 		if (TouchingWall () && velocity.y < 2) {
-			//Reset wall sliding speed if the player is falling faster than the sliding speed.
+			//Lower wall sliding speed if the player is falling faster than the sliding speed.
 			if (collisionEnter && velocity.y < 0) {
-				velocity.y = 0;
+				//Reduce verical velocity by a factor of 10
+				velocity.y /= 10;
 			}
 			velocity.y += gravity * Time.deltaTime * slidingCoefficient;
-			wallJump = true;
 		} else {
 			velocity.y += gravity * Time.deltaTime;
-			wallJump = false;
 		}
 
 		//The controller is given a veloity to move the player by
 		controller.Move (velocity * Time.deltaTime);
+	}
+
+	/**
+	 * Check for side collisions on the first fram that they occur.
+	 * collisionEnter is only true on the first fram of a side collision
+	 */
+	void CheckCollisions () {
+		if (TouchingWall () && !collisionContinuing) {
+			collisionEnter = true;
+			collisionContinuing = true;
+		} else if (TouchingWall () && collisionContinuing) {
+			collisionEnter = false;
+		} else if (!TouchingWall ()) {
+			collisionEnter = false;
+			collisionContinuing = false;
+		}
 	}
 
 	//#################
