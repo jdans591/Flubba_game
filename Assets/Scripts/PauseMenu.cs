@@ -11,24 +11,26 @@ public class PauseMenu : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (isPaused) {
-			pauseMenuCanvas.SetActive (true);
-			Time.timeScale = 0f;
-		} else {
-			pauseMenuCanvas.SetActive (false);
-			Time.timeScale = 1f;
-		}
-			
-		if (Input.GetKeyDown(KeyCode.Escape) && (disabled == false)){
-			isPaused = !isPaused;
+		if (disabled == false) {
+			if (isPaused) {
+				pauseMenuCanvas.SetActive (true);
+				Time.timeScale = 0f;
+			} else {
+				pauseMenuCanvas.SetActive (false);
+				Time.timeScale = 1f;
+			}
+				
+			if (Input.GetKeyDown (KeyCode.Escape)) {
+				isPaused = !isPaused;
+			}
 		}
 	}
 
-	public void resume(){
+	public void resume () {
 		isPaused = !isPaused;
 	}
 
-	public void backToMainMenu(){
-		Application.LoadLevel("main_menu");
+	public void backToMainMenu () {
+		Application.LoadLevel ("main_menu");
 	}
 }
