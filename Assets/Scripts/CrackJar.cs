@@ -18,13 +18,13 @@ public class CrackJar : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D collision){
 		if (collision.gameObject.tag == "Player") {
-			collision.gameObject.transform.GetComponent<SpriteRenderer> ().sprite = sprite2;
-			Instantiate(sprite2, collision.gameObject.transform.position, Quaternion.identity);
+			this.gameObject.transform.GetComponent<SpriteRenderer> ().sprite = sprite2;
+			Instantiate(sprite2, this.gameObject.transform.position, Quaternion.identity);
 		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log ("update");
+
 	}
 }

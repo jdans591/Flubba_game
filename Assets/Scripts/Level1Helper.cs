@@ -15,16 +15,19 @@ public class Level1Helper : MonoBehaviour {
 	
 	}
 
+
 	void OnTriggerEnter2D(Collider2D other){
 		if (gameObject.tag == "Helper1") {
 			helperText.setText("Press spacebar to jump.");
 		} else if (gameObject.tag == "Helper2") {
 			helperText.setText("Press spacebar twice rapidly to double jump.");
 		} else if (gameObject.tag == "Helper3") {
-			helperText.setText("Collect coins for bonus rewards!");
+			helperText.setText("Find and crack Dr. Ros' DEADLY chemical jars for bonus points!");
 		} else if (gameObject.tag == "Helper4") {
-			helperText.setText("Be careful not to fall! There will be penalities");
+			helperText.setText("Collect coins for bonus rewards!");
 		} else if (gameObject.tag == "Helper5") {
+			helperText.setText("Be careful not to fall! There will be penalities");
+		} else if (gameObject.tag == "Helper6") {
 			helperText.setText("You can stick onto walls and jump off them continuously");
 		}
 	}
