@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour {
 
 	float gravity;
 	Vector3 velocity;
+    public LevelManager levelManager;
 
 	private bool canMove;
 	private float delay;
@@ -22,6 +23,9 @@ public class EnemyController : MonoBehaviour {
 	void Start () {
 		//The controller is what handles our movement in the game world
 		controller = GetComponent<PlayerPhysics> ();
+
+        //Level will handle all level based actions, such as player death
+        levelManager = FindObjectOfType<LevelManager> ();
 
 		//Variable setup
 		gravity = -(2 * jumpHeight) / Mathf.Pow (timeToJumpApex, 2);
@@ -70,8 +74,10 @@ public class EnemyController : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionEnter2D (Collision2D collision) {
+	void OnTriggerEnter2D (Collider2D collision) {
+        //When collision is detected with player, execute death of player
 		if (collision.gameObject.tag == "Player") {
+            levelManager.HandleDeath();
 			Debug.Log ("Bang");
 		}
 	}
