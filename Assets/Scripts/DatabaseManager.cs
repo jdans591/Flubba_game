@@ -17,18 +17,13 @@ public class DatabaseManager : MonoBehaviour {
         Debug.Log(form.data);
     }
 
-    public void GetLeaderboard()
-    {
-
-    }
-
     IEnumerator WaitForRequest(WWW www)
     {
         yield return www;
         // check for errors
         if (www.error == null)
         {
-            Debug.Log("WWW Ok!: " + www.data);
+            Debug.Log("WWW Ok!: " + www.text);
         }
         else
         {
