@@ -1,26 +1,36 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class LeaderboardPopulator : MonoBehaviour {
 
-    public GameObject TimeList;
-	// Use this for initialization
-	void Start ()
+    public TimeEntry T1;
+    public TimeEntry T2;
+    public TimeEntry T3;
+    public TimeEntry T4;
+    public TimeEntry T5;
+    public TimeEntry T6;
+    public TimeEntry T7;
+    public TimeEntry T8;
+    public List<TimeEntry> TList;
+
+    // Use this for initialization
+    void Start()
     {
+        TList = new List<TimeEntry>();
+
+        TList.Add(T1);
+        TList.Add(T2);
+        TList.Add(T3);
+        TList.Add(T4);
+        TList.Add(T5);
+        TList.Add(T6);
+        TList.Add(T7);
+        TList.Add(T8);
+
         string url = "https://microsoft-apiapp72ef49a46b6242d28d294f2cda80c2cf.azurewebsites.net/api/Values/1";
         WWW www = new WWW(url);
         StartCoroutine(WaitForRequest(www));
-
-        if (www.isDone)
-        {
-            Debug.Log("Fetched: " + www.text);
-            JSONObject obj = new JSONObject(www.text);
-            for (int i = 0; i < obj.list.Count; i++)
-            {
-                string key = obj.keys[i];
-                Debug.Log(key);
-            }
-        }
     }
 
     IEnumerator WaitForRequest(WWW www)
@@ -37,8 +47,10 @@ public class LeaderboardPopulator : MonoBehaviour {
                 string name = obj.list[i].list[0].str;
                 string time = obj.list[i].list[1].str;
 
-                Debug.Log(name);
-                Debug.Log(time);
+                TList[i].Player.text = name;
+                TList[i].Time.text = time;
+                //TList[i].setPlayer(name);
+                //Debug.Log(time);
             }
         }
         else
