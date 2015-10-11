@@ -2,62 +2,37 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class Storyboard : MonoBehaviour {
-
-	public Text text;
+public class Level1Story : MonoBehaviour {
+	
 	public Text flubText;
 	public Text evilText;
 	private int count = 0;
 	public Text btnText;
 	private int countIntro = 0;
 	ButtonText contButton;
-
+	
 	// Use this for initialization
 	void Start () {
-		setText("\"Knife..\"");
-		setFlubText("Flubba: Huh?");
+		//setFlubText("Flubba: Huh?");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
-	
-	}
-
-	public void setText(string msg){
-		text.text = msg;
+		
+		
 	}
 
 	public void setFlubText(string msg){
 		flubText.text = msg;
 	}
-
+	
 	public void setEvilText(string msg){
 		evilText.text = msg;
 	}
-
-	public void clicked(){
-		if (count == 0) {
-			setText ("\"Scalpel..\"");
-			count++;
-		} else if (count == 1) {
-			setText ("\"Sponge..\"");
-			count++;
-		} else if (count == 2) {
-			setText ("\"Wait! It's convulsing!\"");
-			count++;
-		} else if (count == 3) {
-			setText ("\"Grab the shotgun! Grab the shotgun!\"");
-			count++;
-		} else if (count == 4) {
-			Application.LoadLevel (5);
-		}
-
-	}
-
+	
 	public void clickedIntro(){
 		if(countIntro == 0){
-			setFlubText ("Flubba: Huh? Where am I?");
+			setFlubText ("Flubba: What is this place?");
 			countIntro++;
 		} else if (countIntro == 1) {
 			setFlubText ("");
@@ -68,7 +43,7 @@ public class Storyboard : MonoBehaviour {
 			countIntro++;
 		} else if (countIntro == 2) {
 			setEvilText ("");
-			setFlubText ("Flubba: What? Who are you?");
+			setFlubText ("Flubba: Then how come I'm talking to you?");
 			countIntro++;
 		} else if (countIntro == 3) {
 			btnText.text = "";
@@ -78,33 +53,29 @@ public class Storyboard : MonoBehaviour {
 			//multipleTexts("Voice: That doesn't matter right now.", "Voice: Right now you just need to get out of here.","Voice: Don't worry, I'll help you.");
 		}
 	}
-
+	
 	IEnumerator multipleTexts1(){
 		setFlubText ("");
-		setEvilText ("Voice: Thank god!");
+		setEvilText ("Voice: This is Elon Bohr's lab");
 		//System.Threading.Thread.Sleep (1000);
 		yield return new WaitForSeconds(2);
-		setEvilText ("Voice: You made it!");
+		setEvilText ("Voice: He created you to sabotage those who oppose him.");
 		//System.Threading.Thread.Sleep (1000);
-		yield return new WaitForSeconds (2);
-		setEvilText ("Voice: Things were looking pretty hairy for a while back there.");
 		btnText.text = "Continue";
 	}
-
+	
 	IEnumerator multipleTexts2(){
 		setFlubText ("");
-		setEvilText ("Voice: That doesn't matter right now.");
+		setEvilText ("Voice: Because I broke in and freed you after your creation.");
 		//System.Threading.Thread.Sleep (1000);
 		yield return new WaitForSeconds(2);
-		setEvilText ("Voice: Right now you just need to get out of here.");
+		setEvilText ("Voice: Right now there's nothing for you to do but keep moving.");
 		//System.Threading.Thread.Sleep (1000);
-		yield return new WaitForSeconds (2);
-		setEvilText ("Voice: Don't worry, I'll help you.");
 		yield return new WaitForSeconds(2);
 		Application.LoadLevel(3);
-
+		
 	}
-
+	
 	IEnumerable changeScene(){
 		float fadeTime = GameObject.Find("IntroCanvas").GetComponent<Fading>().BeginFade(1);
 		yield return new WaitForSeconds(0.8f);
