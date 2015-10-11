@@ -7,7 +7,6 @@ public class EndMenu : MonoBehaviour {
 	public GameObject endMenuCanvas;
 	public Text coinText;
 	public Text timeText;
-	public Text scoreText;
 	public CoinCount coinCount;
 	public TimeControl timeControl;
 
@@ -22,7 +21,6 @@ public class EndMenu : MonoBehaviour {
 		
 		coinText.text = numCoin.ToString () + "/5";
 		timeText.text = finalTime;
-		scoreText.text = "10000";
 	}
     
 	public void backToMainMenu () {
