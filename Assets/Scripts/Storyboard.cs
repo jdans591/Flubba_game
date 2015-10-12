@@ -11,6 +11,7 @@ public class Storyboard : MonoBehaviour {
 	public Text btnText;
 	private int countIntro = 0;
 	ButtonText contButton;
+	Fader fader;
 
 	// Use this for initialization
 	void Start () {
@@ -50,7 +51,9 @@ public class Storyboard : MonoBehaviour {
 			setText ("\"Grab the shotgun! Grab the shotgun!\"");
 			count++;
 		} else if (count == 4) {
-			Application.LoadLevel (5);
+			//Fader fader;
+			//fader.EndScene();
+			Application.LoadLevel (0);
 		}
 
 	}
