@@ -3,7 +3,6 @@ using System.Collections;
 
 public class EndPoint : MonoBehaviour {
 
-    public DatabaseManager dbManager;
 	public PauseMenu pauseMenu;
 	public EndMenu endMenu;
 	public GameObject endMenuCanvas;
@@ -34,7 +33,6 @@ public class EndPoint : MonoBehaviour {
 			StartCoroutine (Example ());
 			endMenu.display ();
 			endMenuCanvas.SetActive (true);
-            dbManager.PostScore("1", "testPlayer", endMenu.timeText.text);
 		}
 	}
 
