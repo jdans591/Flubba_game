@@ -7,10 +7,12 @@ public class EndMenu : MonoBehaviour {
 	public GameObject endMenuCanvas;
 	public Text coinText;
 	public Text timeText;
+    public Text playerName;
 	public CoinCount coinCount;
 	public TimeControl timeControl;
+    public DatabaseManager dbManager;
 
-	private string finalTime;
+    private string finalTime;
 	private int numCoin;
 	private long finalScore;
 	private float finalTimeInFloat; 
@@ -34,4 +36,11 @@ public class EndMenu : MonoBehaviour {
 	public void continueWithNext () {
 		Application.LoadLevel ("level_select");
 	}
+
+    public void uploadScore()
+    {
+        Debug.Log("Uploading Score...");
+        dbManager.PostScore("1", playerName.text, timeText.text);
+        Debug.Log("Upload complete!");
+    }
 }
