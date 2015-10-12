@@ -22,14 +22,15 @@ public class PlayerInput : MonoBehaviour {
 	float velocityXSmoothing;
 	float accelerationTimeAirborne;
 	float airCharge;
-	Vector3 velocity;
 	bool collisionEnter;
 	bool collisionContinuing;
+	Vector3 velocity;
 
-	private float delay;
+	private float delay = 3; //Measured in seconds
+	private int defaultJumpDelay = 5;
 
-	public DeathCount deathCount;
-	public int numberOfDeath;
+	private int jumpDelay = 20; //Measured in frames
+	private DeathCount deathCount;
 	public AudioClip[] audioClip;
 
 	PlayerPhysics controller;
@@ -49,9 +50,6 @@ public class PlayerInput : MonoBehaviour {
 		//Player ability setup
 		airCharge = 0;
 
-		//Delay and player statistics
-		delay = 3;
-		numberOfDeath = 0;
 
 		//Collision checking for wall sliding speed
 		collisionEnter = false;
@@ -72,6 +70,15 @@ public class PlayerInput : MonoBehaviour {
 
 		//Checks if the player just collided with a wall to reset vertical sliding speed
 		CheckCollisions ();
+
+		//Count down for the jump delay
+		if (TouchingGround()) {
+			jumpDelay = defaultJumpDelay;
+		}
+		else if (jumpDelay != 0) {
+			jumpDelay--;
+		}
+
 
 		// The current definition of a vertical wall is a platform with at least approx 75 degrees of elevation from horizontal.
 		//Vertical collision detection. If the player touches the ground or ceiling set vertical velocity to zero.
@@ -110,7 +117,10 @@ public class PlayerInput : MonoBehaviour {
 
 		//When the jump button is pressed.
 		if (Input.GetKeyDown (KeyCode.Space)) { //Simply jump if the object is on the ground. 
-			if (TouchingGround ()) {
+			if (TouchingGround () || jumpDelay != 0) {
+				if (TouchingGround()) {
+					jumpDelay = 0;
+				}
 				PlaySound (0);
 				accelerationTimeAirborne = airborneAccelFast; //Update direction change speed
 				velocity.y = jumpVelocity;
@@ -125,7 +135,8 @@ public class PlayerInput : MonoBehaviour {
 					velocity.y = jumpVelocity;
 					velocity.x = moveSpeed * (float)1.5;
 				}
-			} else if (airCharge == 1) {
+			}
+			else if (airCharge == 1) {
 				PlaySound (0);
 				accelerationTimeAirborne = airborneAccelFast; //Update direction change speed
 				velocity.y = jumpVelocity;
