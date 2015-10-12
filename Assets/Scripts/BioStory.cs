@@ -53,4 +53,8 @@ public class BioStory : MonoBehaviour {
 		Application.LoadLevel(3);
 		yield break;
 	}
+
+	public void skipped(){
+		Application.LoadLevel(3);
+	}
 }
