@@ -20,8 +20,6 @@ public class EndPoint : MonoBehaviour {
 	void Update () {
 		if (isPaused) {
 			Time.timeScale = 0f;
-		} else {
-			Time.timeScale = 1f;
 		}
 	}
 
