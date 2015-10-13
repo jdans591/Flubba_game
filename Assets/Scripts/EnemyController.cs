@@ -11,10 +11,10 @@ public class EnemyController : MonoBehaviour {
 
 	float gravity;
 	Vector3 velocity;
-    public LevelManager levelManager;
+	public LevelManager levelManager;
 
 	private bool canMove;
-    private bool atEdge;
+	private bool atEdge;
 	private float delay;
 
 	//The controller handles movement and collisions
@@ -25,13 +25,13 @@ public class EnemyController : MonoBehaviour {
 		//The controller is what handles our movement in the game world
 		controller = GetComponent<PlayerPhysics> ();
 
-        //Level will handle all level based actions, such as player death
-        levelManager = FindObjectOfType<LevelManager> ();
+		//Level will handle all level based actions, such as player death
+		levelManager = FindObjectOfType<LevelManager> ();
 
 		//Variable setup
 		gravity = -(2 * jumpHeight) / Mathf.Pow (timeToJumpApex, 2);
 		canMove = false;
-        atEdge = false;
+		atEdge = false;
 		delay = 3;
 	}
 
@@ -66,13 +66,12 @@ public class EnemyController : MonoBehaviour {
 			// Reverse direction if colliding with a wall
 			if (TouchingWall ()) {
 				velocity.x *= -1;
-            }
+			}
             // Reverse direction if at edge of a platform
-            else if (atEdge)
-            {
-                atEdge = false;
-                velocity.x *= -1;
-            }
+            else if (atEdge) {
+				atEdge = false;
+				velocity.x *= -1;
+			}
 
 			//Gravity is applied
 			velocity.y += gravity * Time.deltaTime;
@@ -83,17 +82,16 @@ public class EnemyController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D (Collider2D collision) {
-        //When collision is detected with player, execute death of player
+		//When collision is detected with player, execute death of player
 		if (collision.gameObject.tag == "Player") {
-            Debug.Log("Bang");
-            levelManager.HandleDeath();
-        }
-        //When collision is detected with edge invisible wall, determine atEdge to be true
-        if (collision.gameObject.tag == "EdgeSpace")
-        {
-            Debug.Log("Invisible Wall");
-            atEdge = true;
-        }
+			Debug.Log ("Bang");
+			levelManager.HandleDeath ();
+		}
+		//When collision is detected with edge invisible wall, determine atEdge to be true
+		if (collision.gameObject.tag == "PatrolBoundary") {
+			Debug.Log ("Invisible Wall");
+			atEdge = true;
+		}
 	}
 
 	//#################
