@@ -34,11 +34,13 @@ public class EndMenu : MonoBehaviour {
 		Application.LoadLevel ("main_menu");
 	}
 
-	public void replayTheStage () {
-		Application.LoadLevel ("level1");
-	}
+    // Changes current focus to specified scene (find scene by number under file -> Build Settings in Unity)
+    public void ChangeToScene(string sceneToChangeTo)
+    {
+        Application.LoadLevel(sceneToChangeTo);
+    }
 
-	public void continueWithNext () {
+    public void continueWithNext () {
 		Application.LoadLevel ("level_select");
 	}
 
