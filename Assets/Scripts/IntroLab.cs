@@ -55,7 +55,7 @@ public class IntroLab : MonoBehaviour {
 		} else if (count == 4) {
 			//Fader fader;
 			//fader.EndScene();
-			Application.LoadLevel (0);
+			Application.LoadLevel (5);
 		}
 		
 	}
@@ -63,11 +63,11 @@ public class IntroLab : MonoBehaviour {
 	IEnumerable changeScene(){
 		float fadeTime = GameObject.Find("IntroCanvas").GetComponent<Fading>().BeginFade(1);
 		yield return new WaitForSeconds(0.8f);
-		Application.LoadLevel(3);
+		Application.LoadLevel(5);
 		yield break;
 	}
 	
 	public void skipped(){
-		Application.LoadLevel(0);
+		Application.LoadLevel(5);
 	}
 }

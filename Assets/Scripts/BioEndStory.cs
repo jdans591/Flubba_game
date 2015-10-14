@@ -9,6 +9,7 @@ public class BioEndStory : MonoBehaviour {
 	//public Text btnText;
 	public Text evilText;
 	private int countIntro = -1;
+	public Image myImage;
 
 	public void Update(){
 		if (Input.GetKeyDown("return")){
@@ -54,11 +55,16 @@ public class BioEndStory : MonoBehaviour {
 		} else if (countIntro == 7) {
 			setElonText ("Elon: Your sole purpose is to cripple those who would dare stand up to your creator.");
 		}else if (countIntro == 8){
-			setElonText ("Elon: You will not kill again!");
+			setElonText ("Elon: I have something to show you...");
 		}else if (countIntro == 9){
+			//ChangeImage("bam");
 			//StartCoroutine("ChangeScene");
 			Application.LoadLevel(3);
 		}
+	}
+
+	public void ChangeImage (string newImageTitle){
+		myImage.sprite = Resources.Load<Sprite>(newImageTitle);
 	}
 
 	public void skipped(){

@@ -15,7 +15,6 @@ public class Storyboard : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		setText("\"Knife..\"");
 		setFlubText("Flubba: Huh?");
 	}
 	
@@ -23,14 +22,8 @@ public class Storyboard : MonoBehaviour {
 	void Update () {
 		if (Input.GetKeyDown("return")){
 			countIntro++;
-			count++;
 			clickedIntro();
-			clicked();
 		}
-	}
-
-	public void setText(string msg){
-		text.text = msg;
 	}
 
 	public void setFlubText(string msg){
@@ -39,27 +32,6 @@ public class Storyboard : MonoBehaviour {
 
 	public void setEvilText(string msg){
 		evilText.text = msg;
-	}
-
-	public void clicked(){
-		if (count == 0) {
-			setText ("\"Scalpel..\"");
-			//count++;
-		} else if (count == 1) {
-			setText ("\"Sponge..\"");
-			//count++;
-		} else if (count == 2) {
-			setText ("\"Wait! It's convulsing!\"");
-			//count++;
-		} else if (count == 3) {
-			setText ("\"Grab the shotgun! Grab the shotgun!\"");
-			//count++
-		} else if (count == 4) {
-			//Fader fader;
-			//fader.EndScene();
-			Application.LoadLevel (0);
-		}
-
 	}
 
 	public void clickedIntro(){
