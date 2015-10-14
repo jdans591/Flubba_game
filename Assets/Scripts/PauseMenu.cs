@@ -33,4 +33,10 @@ public class PauseMenu : MonoBehaviour {
 	public void backToMainMenu () {
 		Application.LoadLevel ("main_menu");
 	}
+
+    // Changes current focus to specified scene (find scene by number under file -> Build Settings in Unity)
+    public void ChangeToScene(string sceneToChangeTo)
+    {
+        Application.LoadLevel(sceneToChangeTo);
+    }
 }

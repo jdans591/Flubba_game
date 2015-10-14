@@ -7,7 +7,7 @@ public class IntroLab : MonoBehaviour {
 	public Text text;
 	public Text flubText;
 	public Text evilText;
-	private int count = -1;
+	private int count = 0;
 	//public Text btnText;
 	private int countIntro = -1;
 	ButtonText contButton;
@@ -22,7 +22,7 @@ public class IntroLab : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown("return")){
-			count++;
+			//count++;
 			clicked();
 		}
 	}
@@ -42,32 +42,25 @@ public class IntroLab : MonoBehaviour {
 	public void clicked(){
 		if (count == 0) {
 			setText ("\"Scalpel..\"");
-			//count++;
+			count++;
 		} else if (count == 1) {
 			setText ("\"Sponge..\"");
-			//count++;
+			count++;
 		} else if (count == 2) {
 			setText ("\"Wait! It's convulsing!\"");
-			//count++;
+			count++;
 		} else if (count == 3) {
 			setText ("\"Grab the shotgun! Grab the shotgun!\"");
-			//count++
+			count++;
 		} else if (count == 4) {
 			//Fader fader;
 			//fader.EndScene();
-			Application.LoadLevel (0);
+			Application.LoadLevel (5);
 		}
 		
 	}
-	
-	IEnumerable changeScene(){
-		float fadeTime = GameObject.Find("IntroCanvas").GetComponent<Fading>().BeginFade(1);
-		yield return new WaitForSeconds(0.8f);
-		Application.LoadLevel(3);
-		yield break;
-	}
-	
+
 	public void skipped(){
-		Application.LoadLevel(0);
+		Application.LoadLevel(5);
 	}
 }
