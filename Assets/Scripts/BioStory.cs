@@ -11,6 +11,7 @@ public class BioStory : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown("return")){
+			//countIntro++;
 			clickedIntro();
 		}
 	}
@@ -32,13 +33,6 @@ public class BioStory : MonoBehaviour {
 		} else if (countIntro == 3) {
 			Application.LoadLevel(1);
 		}
-	}
-	
-	IEnumerable changeScene(){
-		float fadeTime = GameObject.Find("IntroCanvas").GetComponent<Fading>().BeginFade(1);
-		yield return new WaitForSeconds(0.8f);
-		Application.LoadLevel(3);
-		yield break;
 	}
 
 	public void skipped(){
