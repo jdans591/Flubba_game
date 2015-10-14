@@ -15,13 +15,18 @@ public class EndMenu : MonoBehaviour {
     private string finalTime;
 	private int numCoin;
 	private long finalScore;
-	private float finalTimeInFloat; 
+	private float finalTimeInFloat;
+    private GameObject[] coins;
     
+    void Start() {
+        coins = GameObject.FindGameObjectsWithTag("Coin");
+    }
+
 	public void display () {
 		finalTime = timeControl.text.text;
-		numCoin = coinCount.coinCount;
+		numCoin = coinCount.coinCount;        
 		
-		coinText.text = numCoin.ToString () + "/5";
+		coinText.text = numCoin.ToString () + "/" + coins.Length.ToString();
 		timeText.text = finalTime;
 	}
     

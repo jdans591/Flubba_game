@@ -28,7 +28,6 @@ public class PlayerInput : MonoBehaviour {
 
 	private float delay = 3; //Measured in seconds
 	private int defaultJumpDelay = 5;
-	private int numberOfDeath = 0;
 
 	private int jumpDelay = 20; //Measured in frames
 	private DeathCount deathCount;

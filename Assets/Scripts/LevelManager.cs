@@ -3,12 +3,11 @@ using System.Collections;
 
 public class LevelManager : MonoBehaviour {
 	public GameObject startPoint;
-	public GameObject currentCheckpoint;
 	public GameObject flubba;
-	private GameObject currentFlubba;
-
 	public DeathCount deathCount;
-	public int numberOfDeath;
+	public GameObject currentCheckpoint;
+
+	private GameObject currentFlubba;
 
 	void Awake () {
 		currentCheckpoint = startPoint;
@@ -19,7 +18,6 @@ public class LevelManager : MonoBehaviour {
 	void Start () {
 		currentFlubba = GameObject.Find ("Player(Clone)");
 		RespawnPlayer ();
-		numberOfDeath = 0;
 	}
 	
 	// Update is called once per frame
