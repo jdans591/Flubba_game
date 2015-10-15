@@ -35,7 +35,7 @@ public class LeaderboardPopulator : MonoBehaviour {
         string url = "https://microsoft-apiapp72ef49a46b6242d28d294f2cda80c2cf.azurewebsites.net/api/Values/1";
         WWW www = new WWW(url);
         StartCoroutine(WaitForRequest(www, 1));
-    /*
+    
         string url2 = "https://microsoft-apiapp72ef49a46b6242d28d294f2cda80c2cf.azurewebsites.net/api/Values/2";
         WWW www2 = new WWW(url2);
         StartCoroutine(WaitForRequest(www2, 2));
@@ -46,7 +46,7 @@ public class LeaderboardPopulator : MonoBehaviour {
 
         string url4 = "https://microsoft-apiapp72ef49a46b6242d28d294f2cda80c2cf.azurewebsites.net/api/Values/4";
         WWW www4 = new WWW(url4);
-        StartCoroutine(WaitForRequest(www4, 4)); */
+        StartCoroutine(WaitForRequest(www4, 4)); 
     }
 
     IEnumerator WaitForRequest(WWW www, int levelNumber)
