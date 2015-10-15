@@ -29,15 +29,15 @@ public class RevealStory : MonoBehaviour {
 	
 	public void clicked(){
 		if (countIntro == 0) {
-			setFlubText ("Flubba: Did I... Did I kill all these people?");
+			setFlubText ("Flubba: What have I done??");
 			countIntro++;
 		} else if (countIntro == 1) {
 			setFlubText ("");
-			setElonText ("Elon: Yes Flubba, your creator wiped your memory after each one.");
+			setElonText ("Elon: This is your creators fault.");
 			countIntro++;
 		} else if (countIntro == 2) {
 			setFlubText ("");
-			setElonText ("Elon: You can't help these ones, but you can still stop your creator.");
+			setElonText ("Elon: You must stop him.");
 			countIntro++;
 
 		} else if (countIntro == 3) {
@@ -51,14 +51,10 @@ public class RevealStory : MonoBehaviour {
 			countIntro++;
 		} else if (countIntro == 5) {
 			setFlubText ("");
-			setElonText("Elon: If he wipes your memory again then all hope will be lost.");
-			countIntro++;
-		} else if (countIntro == 6) {
-			setFlubText ("");
 			setElonText ("Elon: This is our last chance Flubba, good luck.");
 			countIntro++;
 
-		} else if (countIntro == 7) {
+		} else if (countIntro == 6) {
 			Application.LoadLevel(3);
 		}
 	}

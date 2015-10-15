@@ -25,10 +25,33 @@ public class EndPoint : MonoBehaviour {
 
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.tag == "Player") {
-			PlaySound (0);
+
+
+            //16 seconds cutoff to unlock level 2
+            if (Application.loadedLevelName.Equals("level1"))
+            {
+                Debug.Log("Level2Locked should be false now.");
+                PlayerPrefs.SetString("Level2Locked", "false");
+                Debug.Log("Value of level locked now is :" + PlayerPrefs.GetString("Level2Locked"));
+            }
+            //1 minute cutoff to unlock level 3
+            else if ( Application.loadedLevelName.Equals("level2"))
+            {
+                PlayerPrefs.SetString("Level3Locked", "false");
+            }
+            //2 minutes cutoff to unlock level 4
+            else if (Application.loadedLevelName.Equals("level3"))
+            {
+                PlayerPrefs.SetString("Level4Locked", "false");
+            }
+
+            PlayerPrefs.Save();
+
+
+
+            PlaySound (0);
 			pauseMenu.disabled = true;
 			isPaused = true;
-			StartCoroutine (Example ());
 			endMenu.display ();
 			endMenuCanvas.SetActive (true);
 		}
@@ -37,9 +60,5 @@ public class EndPoint : MonoBehaviour {
 	void PlaySound (int clip) {
 		audio.clip = audioClip [clip];
 		audio.Play ();
-	}
-
-	IEnumerator Example () {
-		yield return new WaitForSeconds (30);
 	}
 }
