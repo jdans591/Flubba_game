@@ -50,7 +50,6 @@ public class LeaderboardPopulator : MonoBehaviour {
         WWW www4 = new WWW(url4);
         StartCoroutine(WaitForRequest(www4, 4));
 
-        ProgressCircle.SetActive(false);
     }
 
     IEnumerator WaitForRequest(WWW www, int levelNumber)
@@ -71,6 +70,7 @@ public class LeaderboardPopulator : MonoBehaviour {
                 TList2D[j, levelNumber - 1].Player.text = name;
                 TList2D[j, levelNumber - 1].Time.text = time;
             }
+            ProgressCircle.SetActive(false);
         }
         else
         {
