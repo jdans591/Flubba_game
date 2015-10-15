@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class LeaderboardPopulator : MonoBehaviour {
-    
+
+    public GameObject ProgressCircle;
+
     public CanvasLevel CL1;
     public CanvasLevel CL2;
     public CanvasLevel CL3;
@@ -46,7 +48,9 @@ public class LeaderboardPopulator : MonoBehaviour {
 
         string url4 = "https://microsoft-apiapp72ef49a46b6242d28d294f2cda80c2cf.azurewebsites.net/api/Values/4";
         WWW www4 = new WWW(url4);
-        StartCoroutine(WaitForRequest(www4, 4)); 
+        StartCoroutine(WaitForRequest(www4, 4));
+
+        ProgressCircle.SetActive(false);
     }
 
     IEnumerator WaitForRequest(WWW www, int levelNumber)
