@@ -14,7 +14,7 @@ public class Storyboard : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		setFlubText("Flubba: Huh?");
+		//setFlubText("Flubba: Huh?");
 	}
 	
 	// Update is called once per frame
