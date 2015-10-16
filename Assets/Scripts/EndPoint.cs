@@ -62,6 +62,8 @@ public class EndPoint : MonoBehaviour {
             endMenu.timeControl.StopTimer();
 			endMenu.display ();
 			endMenuCanvas.SetActive (true);
+
+            other.gameObject.SetActive(false);
 		}
 	}
 
