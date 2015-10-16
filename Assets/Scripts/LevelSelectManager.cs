@@ -14,9 +14,9 @@ public class LevelSelectManager : MonoBehaviour {
 
     void Start()
     {
-        Debug.Log("Level2Locked is currently :" + PlayerPrefs.GetString("Level2Locked"));
-        Debug.Log("Level3Locked is currently :" + PlayerPrefs.GetString("Level3Locked"));
-        Debug.Log("Level4Locked is currently :" + PlayerPrefs.GetString("Level4Locked"));
+        //Debug.Log("Level2Locked is currently :" + PlayerPrefs.GetString("Level2Locked"));
+        //Debug.Log("Level3Locked is currently :" + PlayerPrefs.GetString("Level3Locked"));
+        //Debug.Log("Level4Locked is currently :" + PlayerPrefs.GetString("Level4Locked"));
 
         if (PlayerPrefs.GetString("Level2Locked").Equals("false"))
         {
@@ -27,7 +27,7 @@ public class LevelSelectManager : MonoBehaviour {
         }
         else
         {
-            Debug.Log("level2button should NOT be interactable");
+            //Debug.Log("level2button should NOT be interactable");
             level2Button.interactable = false;
 
         }
@@ -40,7 +40,7 @@ public class LevelSelectManager : MonoBehaviour {
         }
         else
         {
-            Debug.Log("level3button interactability is : " + level3Button.interactable);
+            //Debug.Log("level3button interactability is : " + level3Button.interactable);
             level3Button.interactable = false;
         }
 
