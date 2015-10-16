@@ -21,9 +21,7 @@ public class EndPoint : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (isPaused) {
-			Time.timeScale = 0f;
-		}
+
 	}
 
 	void OnTriggerEnter2D (Collider2D other) {
@@ -61,7 +59,7 @@ public class EndPoint : MonoBehaviour {
 
             PlaySound (0);
 			pauseMenu.disabled = true;
-			isPaused = true;
+            endMenu.timeControl.StopTimer();
 			endMenu.display ();
 			endMenuCanvas.SetActive (true);
 		}
