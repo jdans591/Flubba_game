@@ -6,9 +6,9 @@ public class ResetProgress : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        PlayerPrefs.SetString("Level2Locked", "true");
-        PlayerPrefs.SetString("Level3Locked", "true");
-        PlayerPrefs.SetString("Level4Locked", "true");
+        PlayerPrefs.SetString("level2Locked", "true");
+        PlayerPrefs.SetString("level3Locked", "true");
+        PlayerPrefs.SetString("level4Locked", "true");
         PlayerPrefs.SetFloat("level1Best", 0);
         PlayerPrefs.SetFloat("level2Best", 0);
         PlayerPrefs.SetFloat("level3Best", 0);

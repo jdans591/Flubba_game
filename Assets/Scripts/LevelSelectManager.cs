@@ -128,8 +128,8 @@ public class LevelSelectManager : MonoBehaviour {
             star3.SetActive(true);
             // Get player's best time for specified level
             best = PlayerPrefs.GetFloat("level" + level.ToString() + "Best");
-            // Check that best time is not 0 (i.e. not set yet), and color the stars according to their performance
-            if (best != 0) {
+        // Check that best time is not 0 (i.e. not set yet), and color the stars according to their performance
+        if (best != 0) {
                 if (best <= benchmark[0, level - 1]) {
                     star1.GetComponent<Image>().color = yellow;
                 }
