@@ -18,17 +18,12 @@ public class EndPoint : MonoBehaviour {
 		audio = GetComponent<AudioSource> ();
 		isPaused = false;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-
-	}
 
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.tag == "Player") {
 
-            // Update level select GUI to show player progress through each of the 4 different levels
-            UpdateProgress();
+        // Update level select GUI to show player progress through each of the 4 different levels
+        UpdateProgress();
 
             PlaySound (0);
 			pauseMenu.disabled = true;
