@@ -6,7 +6,9 @@ public class LevelManager : MonoBehaviour {
 	public GameObject flubba;
 	public DeathCount deathCount;
 	public GameObject currentCheckpoint;
+    public AudioClip deathAudioClip;
 
+    private AudioSource audio;
 	private GameObject currentFlubba;
 
 	void Awake () {
@@ -16,6 +18,7 @@ public class LevelManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        audio = GetComponent<AudioSource>();
 		currentFlubba = GameObject.Find ("Player(Clone)");
 		RespawnPlayer ();
 	}
@@ -37,6 +40,8 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	public void HandleDeath () {
+        audio.clip = deathAudioClip;
+        audio.Play();
 		deathCount.deathCount++;
 		RespawnPlayer ();
 	}
