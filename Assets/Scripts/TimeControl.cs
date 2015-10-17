@@ -7,6 +7,8 @@ public class TimeControl : MonoBehaviour {
 	public Text text;
 
 	public float time;
+    public float coinCollected = 0;
+
 	private float delay;
 	private float minute;
 	private float second;
@@ -44,7 +46,7 @@ public class TimeControl : MonoBehaviour {
 
         if (stopTimer == false)
         {
-            time = Time.timeSinceLevelLoad - delay;
+            time = Time.timeSinceLevelLoad - delay - coinCollected;
             minute = 0;
             second = time;
 
