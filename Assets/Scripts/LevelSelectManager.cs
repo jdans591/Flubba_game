@@ -48,7 +48,11 @@ public class LevelSelectManager : MonoBehaviour {
     public GameObject lock4;
 
     // Set time required to unlock Bronze/Silver/Gold star rating for each level
-    float[,] benchmark = new float[3, 4] { { 90, 120, 180, 60 }, { 20, 50, 90, 45 }, { 15, 35, 45, 30 } };
+    // Level 1 Bronze/Silver/Gold = 90/20/15 seconds
+    // Level 2 Bronze/Silver/Gold = 120/50/35 seconds
+    // Level 3 Bronze/Silver/Gold = 180/90/45 seconds
+    // Level 4 Bronze/Silver/Gold = 300/60/20 seconds
+    float[,] benchmark = new float[3, 4] { { 90, 120, 180, 300 }, { 20, 50, 90, 60 }, { 15, 35, 45, 20 } };
 
     void Start() {
         /* //Debug.Log("Level2Locked is currently :" + PlayerPrefs.GetString("Level2Locked"));
