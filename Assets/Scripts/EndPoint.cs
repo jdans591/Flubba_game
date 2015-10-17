@@ -21,11 +21,14 @@ public class EndPoint : MonoBehaviour {
 
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.tag == "Player") {
-            // Update level select GUI to show player progress through each of the 4 different levels
-            UpdateProgress();
-            
+
+        // Update level select GUI to show player progress through each of the 4 different levels
+        UpdateProgress();
+
             PlaySound (0);
 			pauseMenu.disabled = true;
+            UpdateCoinCount(endMenu.coinCount.coinCount);
+
             endMenu.timeControl.StopTimer();
 			endMenu.display ();
 			endMenuCanvas.SetActive (true);
@@ -68,6 +71,17 @@ public class EndPoint : MonoBehaviour {
             PlayerPrefs.SetFloat("level" + level.ToString() + "Best", time);
         }
         PlayerPrefs.Save();
+    }
+
+    //Adds the coin amount to the players total coins
+    void UpdateCoinCount(int coins) {
+        int total = PlayerPrefs.GetInt("coinCount");
+        Debug.Log(total);
+        total += coins;
+        Debug.Log(total);
+
+        //Write the new value back to the player prefs
+        PlayerPrefs.SetInt("coinCount", total);
     }
 
     void PlaySound (int clip) {
