@@ -8,7 +8,7 @@ public class Collectables : MonoBehaviour {
 
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.tag == "Player") {
-
+            
             timeControl.time = timeControl.time - 1;
             timeControl.coinCollected++;
 
