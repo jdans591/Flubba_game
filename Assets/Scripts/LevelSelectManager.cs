@@ -52,7 +52,7 @@ public class LevelSelectManager : MonoBehaviour {
     // Level 2 Bronze/Silver/Gold = 120/50/35 seconds
     // Level 3 Bronze/Silver/Gold = 180/90/45 seconds
     // Level 4 Bronze/Silver/Gold = 300/60/20 seconds
-    float[,] benchmark = new float[3, 4] { { 90, 120, 180, 300 }, { 20, 50, 90, 60 }, { 15, 35, 45, 20 } };
+    public float[,] benchmark = new float[3, 4] { { 90, 120, 180, 300 }, { 20, 50, 90, 60 }, { 15, 35, 45, 20 } };
 
     void Start() {
         // Set stars for level 1 based on player's best time
