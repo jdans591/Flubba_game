@@ -11,6 +11,11 @@ public class StoreManager : MonoBehaviour
     public GameObject SkinCanvas4;
     public GameObject RandomeCanvas;
 
+    public Sprite Skin1;
+    public Sprite Skin2;
+    public Sprite Skin3;
+    public Sprite Skin4;
+
     public void ChangeSkinCanvas(int skinNum)
     {
         switch (skinNum)
@@ -82,19 +87,19 @@ public class StoreManager : MonoBehaviour
         switch (skinNum)
         {
             case 1:
-                player.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("");
+                player.GetComponent<SpriteRenderer>().sprite = Skin1;
                 break;
 
             case 2:
-                player.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("");
+                player.GetComponent<SpriteRenderer>().sprite = Skin2;
                 break;
 
             case 3:
-                player.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("");
+                player.GetComponent<SpriteRenderer>().sprite = Skin3;
                 break;
 
             case 4:
-                player.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("");
+                player.GetComponent<SpriteRenderer>().sprite = Skin4;
                 break;
 
             case 5:
