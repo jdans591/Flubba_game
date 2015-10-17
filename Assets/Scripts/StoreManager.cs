@@ -108,8 +108,6 @@ public class StoreManager : MonoBehaviour
 
     public void applySkin(int skinNum)
     {
-        int total = PlayerPrefs.GetInt("coinCount");
-
         switch (skinNum)
         {
             case 1:
@@ -129,7 +127,7 @@ public class StoreManager : MonoBehaviour
                 break;
 
             case 5:
-                int num = Random.Range(1, 4);
+                int num = Random.Range(1, 5);
                 applySkin(num);
                 break;
         }
