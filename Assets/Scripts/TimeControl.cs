@@ -20,7 +20,8 @@ public class TimeControl : MonoBehaviour {
 		text.text = "0";
 		playerCanMove = false;
         stopTimer = false;
-		delay = 3;  
+		delay = 3;
+        coinCollected = 0;
 	}
 	
 	// Update is called once per frame
