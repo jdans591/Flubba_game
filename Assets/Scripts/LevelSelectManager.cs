@@ -52,50 +52,9 @@ public class LevelSelectManager : MonoBehaviour {
     // Level 2 Bronze/Silver/Gold = 120/50/35 seconds
     // Level 3 Bronze/Silver/Gold = 180/90/45 seconds
     // Level 4 Bronze/Silver/Gold = 300/60/20 seconds
-    float[,] benchmark = new float[3, 4] { { 90, 120, 180, 300 }, { 20, 50, 90, 60 }, { 15, 35, 45, 20 } };
+    public float[,] benchmark = new float[3, 4] { { 90, 120, 180, 300 }, { 20, 50, 90, 60 }, { 15, 35, 45, 20 } };
 
     void Start() {
-        /* //Debug.Log("Level2Locked is currently :" + PlayerPrefs.GetString("Level2Locked"));
-         //Debug.Log("Level3Locked is currently :" + PlayerPrefs.GetString("Level3Locked"));
-         //Debug.Log("Level4Locked is currently :" + PlayerPrefs.GetString("Level4Locked"));
-
-         if (PlayerPrefs.GetString("Level2Locked").Equals("false"))
-         {
-             Debug.Log("level2button should be interactable");
-             level2Button.interactable = true;
-             //level2Button.image.color = new Color32(29, 211, 20, 255); //green colour (level enabled).
-
-         }
-         else
-         {
-             //Debug.Log("level2button should NOT be interactable");
-             level2Button.interactable = false;
-
-         }
-
-         if (PlayerPrefs.GetString("Level3Locked").Equals("false"))
-         {
-             Debug.Log("level3button interactability is : " + level3Button.interactable);
-             level3Button.interactable = true;
-             //level3Button.image.color = new Color32(29, 211, 20, 255); //green colour (level enabled).
-         }
-         else
-         {
-             //Debug.Log("level3button interactability is : " + level3Button.interactable);
-             level3Button.interactable = false;
-         }
-
-         if (PlayerPrefs.GetString("Level4Locked").Equals("false"))
-         {
-             level4Button.interactable = true;
-             //level4Button.image.color = new Color32(29, 211, 20, 255); //green colour (level enabled).
-         }
-         else
-         {
-             level4Button.interactable = false;
-         }
-         */
-
         // Set stars for level 1 based on player's best time
         setStars(1, star11, star12, star13);
 
