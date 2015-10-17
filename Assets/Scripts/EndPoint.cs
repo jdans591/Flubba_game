@@ -27,38 +27,13 @@ public class EndPoint : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.tag == "Player") {
 
-
-            /*            //16 seconds cutoff to unlock level 2
-                        if (Application.loadedLevelName.Equals("level1"))
-                        {
-                            Debug.Log("Level2Locked should be false now.");
-                            PlayerPrefs.SetString("Level2Locked", "false");
-                            Debug.Log("Value of level locked now is :" + PlayerPrefs.GetString("Level2Locked"));
-                        }
-                        //1 minute cutoff to unlock level 3
-                        else if ( Application.loadedLevelName.Equals("level2"))
-                        {
-                            PlayerPrefs.SetString("Level3Locked", "false");
-                        }
-                        //2 minutes cutoff to unlock level 4
-                        else if (Application.loadedLevelName.Equals("level3"))
-                        {
-                            PlayerPrefs.SetString("Level4Locked", "false");
-                        }
-
-                        PlayerPrefs.Save();
-
-            */
-
-
-
-
             // Update level select GUI to show player progress through each of the 4 different levels
             UpdateProgress();
-            
 
             PlaySound (0);
 			pauseMenu.disabled = true;
+            UpdateCoinCount(endMenu.coinCount.coinCount);
+
             endMenu.timeControl.StopTimer();
 			endMenu.display ();
 			endMenuCanvas.SetActive (true);
@@ -101,6 +76,17 @@ public class EndPoint : MonoBehaviour {
             PlayerPrefs.SetFloat("level" + level.ToString() + "Best", time);
         }
         PlayerPrefs.Save();
+    }
+
+    //Adds the coin amount to the players total coins
+    void UpdateCoinCount(int coins) {
+        int total = PlayerPrefs.GetInt("coinCount");
+        Debug.Log(total);
+        total += coins;
+        Debug.Log(total);
+
+        //Write the new value back to the player prefs
+        PlayerPrefs.SetInt("coinCount", total);
     }
 
     void PlaySound (int clip) {
