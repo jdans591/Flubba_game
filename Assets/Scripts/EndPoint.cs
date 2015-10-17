@@ -76,9 +76,7 @@ public class EndPoint : MonoBehaviour {
     //Adds the coin amount to the players total coins
     void UpdateCoinCount(int coins) {
         int total = PlayerPrefs.GetInt("coinCount");
-        Debug.Log(total);
         total += coins;
-        Debug.Log(total);
 
         //Write the new value back to the player prefs
         PlayerPrefs.SetInt("coinCount", total);
