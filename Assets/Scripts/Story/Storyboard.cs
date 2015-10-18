@@ -67,7 +67,7 @@ public class Storyboard : MonoBehaviour {
 			countIntro++;
 
 		}else if (countIntro == 7){
-			Application.LoadLevel("intro_chem");
+			Application.LoadLevel("level1");
 		}
 	}
 	
