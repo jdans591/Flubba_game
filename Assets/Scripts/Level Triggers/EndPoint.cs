@@ -8,10 +8,13 @@ public class EndPoint : MonoBehaviour {
 	public GameObject endMenuCanvas;
 	public AudioClip[] audioClip;
     public TimeControl timeControl;
+    public PlayerInput playerInput;
     AudioSource audio;
 	public bool isPaused;
     string level;
     float best;
+
+    public string replayString = "";
 
 	// Use this for initialization
 	void Start () {
@@ -34,6 +37,15 @@ public class EndPoint : MonoBehaviour {
 			endMenuCanvas.SetActive (true);
 
             other.gameObject.SetActive(false);
+
+            //Create the replay string to send to database.
+            MakeReplayString();
+
+            if(PlayerPrefs.GetInt("isReplay") == 1)
+            {
+                PlayerPrefs.SetInt("isReplay", 0);
+            }
+            
 		}
 	}
 
@@ -86,4 +98,30 @@ public class EndPoint : MonoBehaviour {
 		audio.clip = audioClip [clip];
 		audio.Play ();
 	}
+
+
+    //Create the replayString to send to the database.
+    void MakeReplayString()
+    {
+        for(int i = 0; i < PlayerInput.movementInputs.Count; i++)
+        {
+            replayString = replayString + PlayerInput.movementInputs[i].x + "," + PlayerInput.movementInputs[i].y + "," + PlayerInput.movementInputs[i].z + ";";
+
+        }
+
+        replayString = replayString + System.Environment.NewLine;
+
+        for(int i = 0; i < PlayerInput.jumpInputs.Count; i++)
+        {
+            replayString = replayString + PlayerInput.jumpInputs[i].x + "," + PlayerInput.jumpInputs[i].y + ";";
+        }
+
+        replayString = Application.loadedLevelName + System.Environment.NewLine + replayString;
+
+
+        PlayerPrefs.SetString("replayString", replayString);
+
+
+        Debug.Log("Finished making replay string.");
+    }
 }
