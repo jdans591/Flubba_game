@@ -16,7 +16,7 @@ public class IntroLab : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		setText("\"Knife..\"");
-		setFlubText("Flubba: Huh?");
+		//setFlubText("Flubba: Huh?");
 	}
 	
 	// Update is called once per frame
