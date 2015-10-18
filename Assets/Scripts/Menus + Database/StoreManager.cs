@@ -52,12 +52,6 @@ public class StoreManager : MonoBehaviour
         PlayerPrefs.SetInt("Random Select", 0);
         CoinCount1.text = PlayerPrefs.GetInt("coinCount").ToString();
         conditionalOnAndOff();
-        //player.GetComponent<Animation>().AddClip(anim1, "greenAnim");
-        //player.GetComponent<Animation>().AddClip(anim2, "blueAnim");
-        //player.GetComponent<Animation>().AddClip(anim3, "lightBlueAnim");
-        //player.GetComponent<Animation>().AddClip(anim4, "orangeAnim");
-        //player.GetComponent<Animation>().AddClip(anim5, "purpleAnim");
-        //player.GetComponent<Animation>().AddClip(anim6, "redAnim");
     }
 
     public void ChangeSkinCanvas(int skinNum)
@@ -265,7 +259,6 @@ public class StoreManager : MonoBehaviour
         {
             player.GetComponent<SpriteRenderer>().sprite = skin;
             player.GetComponent<Animation>().clip = anim;
-            //applyButton.GetComponentInChildren<Text>().text = "Equipped";
         }
         else
         {
@@ -282,7 +275,6 @@ public class StoreManager : MonoBehaviour
                 PlayerPrefs.SetInt("Random Select", 0);
             }
             
-            //applyButton.GetComponentInChildren<Text>().text = "Equipped";
             wallet.text = PlayerPrefs.GetInt("coinCount").ToString();
         }
     }
