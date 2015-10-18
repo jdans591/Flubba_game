@@ -48,7 +48,6 @@ public class StoreManager : MonoBehaviour
     void Start()
     {
         PlayerPrefs.SetInt("Green Slime", 1);
-        PlayerPrefs.SetInt("coinCount", 5000);
         PlayerPrefs.SetInt("Current Skin", 0);
         PlayerPrefs.SetInt("Random Select", 0);
         CoinCount1.text = PlayerPrefs.GetInt("coinCount").ToString();
@@ -266,8 +265,7 @@ public class StoreManager : MonoBehaviour
         {
             player.GetComponent<SpriteRenderer>().sprite = skin;
             player.GetComponent<Animation>().clip = anim;
-            //changePrevious(skinNum);
-            applyButton.GetComponentInChildren<Text>().text = "Equipped";
+            //applyButton.GetComponentInChildren<Text>().text = "Equipped";
         }
         else
         {
@@ -283,41 +281,9 @@ public class StoreManager : MonoBehaviour
                 PlayerPrefs.SetInt("coinCount", PlayerPrefs.GetInt("coinCount") - price / 2);
                 PlayerPrefs.SetInt("Random Select", 0);
             }
-
-            //changePrevious(skinNum);
-            applyButton.GetComponentInChildren<Text>().text = "Equipped";
+            
+            //applyButton.GetComponentInChildren<Text>().text = "Equipped";
             wallet.text = PlayerPrefs.GetInt("coinCount").ToString();
         }
     }
-
-    //void changePrevious(int skinNum)
-    //{
-    //    if (PlayerPrefs.GetInt("Current Skin") != 0)
-    //    {
-    //        if (PlayerPrefs.GetInt("Current Skin") == 1)
-    //        {
-    //            applyButton1.GetComponentInChildren<Text>().text = "Apply";
-    //        }
-    //        else if (PlayerPrefs.GetInt("Current Skin") == 2)
-    //        {
-    //            applyButton2.GetComponentInChildren<Text>().text = "Apply";
-    //        }
-    //        else if (PlayerPrefs.GetInt("Current Skin") == 3)
-    //        {
-    //            applyButton3.GetComponentInChildren<Text>().text = "Apply";
-    //        }
-    //        else if (PlayerPrefs.GetInt("Current Skin") == 4)
-    //        {
-    //            applyButton4.GetComponentInChildren<Text>().text = "Apply";
-    //        }
-    //        else if (PlayerPrefs.GetInt("Current Skin") == 5)
-    //        {
-    //            applyButton5.GetComponentInChildren<Text>().text = "Apply";
-    //        }
-    //        else if (PlayerPrefs.GetInt("Current Skin") == 6)
-    //        {
-    //            applyButton6.GetComponentInChildren<Text>().text = "Apply";
-    //        }
-    //    }
-    //}
 }
