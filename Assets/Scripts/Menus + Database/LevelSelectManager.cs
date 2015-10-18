@@ -81,6 +81,9 @@ public class LevelSelectManager : MonoBehaviour {
             lock4.SetActive(false);
             setStars(4, star41, star42, star43);
         }
+
+        //Replay
+        PlayerPrefs.SetInt("isReplay", 0);
     }
 
         // Set stars to gold to mirror player's best time for specified level
