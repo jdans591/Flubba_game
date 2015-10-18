@@ -47,7 +47,7 @@ public class RevealStory : MonoBehaviour {
 
 		} else if (countIntro == 4) {
 			setFlubText ("");
-			setElonText ("Elon: He's in the physics lab, but be careful!");
+			setElonText ("Elon: He's inside this physics lab, but be careful!");
 			countIntro++;
 		} else if (countIntro == 5) {
 			setFlubText ("");
@@ -60,6 +60,6 @@ public class RevealStory : MonoBehaviour {
 	}
 	
 	public void skipped(){
-		Application.LoadLevel("level3");
+		Application.LoadLevel("level4");
 	}
 }

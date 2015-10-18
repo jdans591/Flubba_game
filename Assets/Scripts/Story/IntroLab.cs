@@ -11,7 +11,7 @@ public class IntroLab : MonoBehaviour {
 	//public Text btnText;
 	private int countIntro = -1;
 	ButtonText contButton;
-	Fader fader;
+	//Fader fader;
 	
 	// Use this for initialization
 	void Start () {
