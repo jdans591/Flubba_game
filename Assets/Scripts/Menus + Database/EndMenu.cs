@@ -54,9 +54,15 @@ public class EndMenu : MonoBehaviour {
 
     public void uploadScore(string level)
     {
-        Debug.Log("Uploading Score..."); 
+        Debug.Log("Uploading Score...");
         dbManager.PostScore(level, playerName.text, timeText.text);
         Debug.Log("Upload complete!");
+    }
+
+    public void OpenReplay()
+    {
+        PlayerPrefs.SetInt("isReplay", 1);
+        Application.LoadLevel(Application.loadedLevelName);
     }
 
     void GetBestTime() {

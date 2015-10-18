@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /**
  * NOTE: Uses basic ray-tracing template from https://github.com/SebLague/2DPlatformer-Tutorial/tree/master/Episode%2005
@@ -37,8 +38,16 @@ public class PlayerInput : MonoBehaviour {
 	PlayerPhysics controller;
 	AudioSource audio;
 
-	/**Initialisation */
-	void Start () {
+    //Replay recordings
+    public static List<Vector3> movementInputs = new List<Vector3>();
+    public static List<Vector2> jumpInputs = new List<Vector2>();
+    public static List<Vector3> movementReplayInputs = new List<Vector3>();
+    public static List<Vector2> jumpReplayInputs = new List<Vector2>();
+    public int counter = 0; //counter for replay frame purposes.
+    public string replay; //contains the replay string from the database (if any).
+
+    /**Initialisation */
+    void Start () {
 		//The controller is what handles our movement in the game world
 		controller = GetComponent<PlayerPhysics> ();
 		audio = GetComponent<AudioSource> ();
@@ -55,7 +64,24 @@ public class PlayerInput : MonoBehaviour {
 		//Collision checking for wall sliding speed
 		collisionEnter = false;
 		collisionContinuing = false;
-	}
+
+
+        if(PlayerPrefs.GetInt("isReplay") == 1)
+        {
+            movementReplayInputs = new List<Vector3>();
+            jumpReplayInputs = new List<Vector2>();
+            ProcessReplay(PlayerPrefs.GetString("replayString"));
+        }
+        else
+        {
+            movementInputs = new List<Vector3>();
+            jumpInputs = new List<Vector2>();
+            jumpReplayInputs = new List<Vector2>();
+            jumpReplayInputs.Add(new Vector2(0, 0));
+        }
+
+        counter = 0;
+    }
 
 	/**
 	 * Update is called every frame in order to update the player with the user's input and calculate the next movment to be handled by the PlayerPhysics class.
@@ -91,8 +117,30 @@ public class PlayerInput : MonoBehaviour {
 			}
 		}
 
-		//Get keyboard input
-		Vector2 input = new Vector2 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
+
+
+
+        Vector2 input;
+        Vector3 replayInput;
+        //Get keyboard input
+      
+        if(PlayerPrefs.GetInt("isReplay") == 1)//true if isReplay string is true i.e. it's a replay.
+        {
+            replayInput = GetInputFromReplay();
+            //Debug.Log(counter);
+            Debug.Log(jumpReplayInputs[counter]);
+            input.x = replayInput.y;
+            input.y = replayInput.z;
+        }
+        else //if isReplay string is false i.e. it's not a replay.
+        {
+            input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            RecordInput(input);
+        }
+		
+
+
+
 
 		//Ignore left button if the object is on the right wall, and ignore right button if the object is on the left wall. 
 		//Also, if the down button is pressed while the object is on a wall, it will slightly move the object off it 
@@ -116,8 +164,13 @@ public class PlayerInput : MonoBehaviour {
 			}
 		}
 
+        
+
+
 		//When the jump button is pressed.
-		if (Input.GetKeyDown (KeyCode.Space)) { //Simply jump if the object is on the ground. 
+		if ((Input.GetKeyDown (KeyCode.Space) && PlayerPrefs.GetInt("isReplay") == 0) || (jumpReplayInputs[counter].y > 0.5 && PlayerPrefs.GetInt("isReplay") == 1)) {
+            Debug.Log("Jump is pressed");
+            //Simply jump if the object is on the ground. 
 			if (TouchingGround () || jumpDelay != 0) {
 				if (TouchingGround()) {
 					jumpDelay = 0;
@@ -187,12 +240,108 @@ public class PlayerInput : MonoBehaviour {
 		}
 	}
 
-	//#################
-	// Helper funcitons
-	//#################
+    void RecordInput(Vector2 input)
+    {
+        float jumpPressed;
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            jumpPressed = 1f;
+        }
+        else
+        {
+            jumpPressed = 0f;
+        }
 
-	//Return true if the player is waiting to move
-	bool IsWaiting () {
+        movementInputs.Add(new Vector3(input.x, input.y, Time.timeSinceLevelLoad - delay));
+        jumpInputs.Add(new Vector2(jumpPressed, Time.timeSinceLevelLoad - delay));
+    }
+
+    void ProcessReplay(string replayString)
+    {
+        //replay = ............;
+        //replay = information from database.......
+
+        //split the replay string into sections
+        char[] delimiters = new char[] { ';', ','};
+        string[] split = replayString.Split(new string[] { System.Environment.NewLine }, System.StringSplitOptions.None);
+        //string[] split = replay.Split(new string[] { System.Environment.NewLine }, System.StringSplitOptions.None);
+
+        string[] line1 = split[0].Split(delimiters);
+        string[] line2 = split[1].Split(delimiters);
+        string[] line3 = split[2].Split(delimiters);
+
+
+        //convert the replay string sections into vector inputs to feed into the program.
+        for (int i = 0; i < line2.Length - 2; i = i + 3)
+        {
+            movementReplayInputs.Add(new Vector3(float.Parse(line2[i + 2]), float.Parse(line2[i]), float.Parse(line2[i + 1])));
+
+
+        }
+        for (int i = 0; i < line3.Length - 1; i = i + 2)
+        {
+            jumpReplayInputs.Add(new Vector2(float.Parse(line3[i + 1]), float.Parse(line3[i])));
+
+
+        }
+
+        Debug.Log("Finished processing replay");
+        for(int i = 0; i < jumpInputs.Count; i++)
+        {
+           //Debug.Log(jumpReplayInputs[i]);
+        }
+       
+    }
+
+    //From a replay string, get the current input that should be fed into unity.
+    Vector3 GetInputFromReplay()
+    {
+        for (int i = counter; i < movementReplayInputs.Count; i++)
+        {
+            if (movementReplayInputs[i].x > Time.timeSinceLevelLoad - delay && 
+                movementReplayInputs[i].x < Time.timeSinceLevelLoad - delay + 0.2 )
+            {
+                counter = i;
+
+                if(movementReplayInputs[i].x > 0.3 && i < movementReplayInputs.Count - 3)//after at least a couple of frames has passed.
+                {
+                    if(jumpReplayInputs[i].y == 0 && (jumpReplayInputs[i+1].y == 1 || jumpReplayInputs[i+2].y == 1 || jumpReplayInputs[i+3].y == 1))
+                    {
+                        if(jumpReplayInputs[i+1].y == 1)
+                        {
+                            counter = i + 1;
+                        }
+                        else if(jumpReplayInputs[i+2].y == 1)
+                        {
+                            counter = i + 2;
+                        }
+                        else if(jumpReplayInputs[i+3].y == 1)
+                        {
+                            counter = i + 3;
+                        }
+                        
+                    }
+
+                    if(jumpReplayInputs[i].y == 1)
+                    {
+                        counter = i + 1;
+                    }
+                  
+                }
+
+                return movementReplayInputs[counter];
+
+            }
+        }
+        return movementReplayInputs[counter];
+    }
+
+    //#################
+    // Helper functions
+    //#################
+
+    //Return true if the player is waiting to move
+    bool IsWaiting () {
 		return Time.timeSinceLevelLoad < delay;
 	}
 

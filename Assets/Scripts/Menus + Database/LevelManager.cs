@@ -9,7 +9,7 @@ public class LevelManager : MonoBehaviour {
     public AudioClip deathAudioClip;
 
     private AudioSource audio;
-	private GameObject currentFlubba;
+	public GameObject currentFlubba;
 
 	void Awake () {
 		currentCheckpoint = startPoint;
