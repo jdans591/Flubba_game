@@ -6,6 +6,7 @@ using UnityEditor;
 public class EndMenu : MonoBehaviour {
 
 	public GameObject endMenuCanvas;
+    public GameObject jackpotCanvas;
 	public Text coinText;
 	public Text timeText;
     public Text playerName;
@@ -32,6 +33,13 @@ public class EndMenu : MonoBehaviour {
 		numCoin = coinCount.coinCount;
 
         int jackpotMoney = AttemptForJackpot(); //check for jackpot winnings
+
+        if (jackpotMoney > 0)
+        {
+            //if jackpot has occured, display the jackpot canvas and add jackpot money to numcoin
+            jackpotCanvas.SetActive(true);
+            numCoin += jackpotMoney;
+        }
 
         //coinText.text = numCoin.ToString () + "/" + coins.Length.ToString();
         // Display number of coins collected for that level and total coins in wallet
@@ -147,10 +155,10 @@ public class EndMenu : MonoBehaviour {
         //assign higer values for probability the faster the player completed the level
         if (recordtime <= benchmark[2, level - 1])
         {
-            probability = 75;
+            probability = 101; //revert back to 75 after demo
         } else if (recordtime <= benchmark[1, level - 1])
         {
-            probability = 50;
+            probability = 101; //revert back to 50 after demo
         } else
         {
             probability = 10;
@@ -159,6 +167,7 @@ public class EndMenu : MonoBehaviour {
         //if randomNumber generated is within probability range, jackpot is fired.
         if (randomNumber < probability)
         {
+            Debug.Log("JACKPOT!");
             int randomPrizeMoney = Random.Range(100, 1000); //generate a random number between 100 and 1000.
 
             //update total coincount
