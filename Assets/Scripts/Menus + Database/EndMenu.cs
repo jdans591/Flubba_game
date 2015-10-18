@@ -50,4 +50,10 @@ public class EndMenu : MonoBehaviour {
         dbManager.PostScore(level, playerName.text, timeText.text);
         Debug.Log("Upload complete!");
     }
+
+    public void OpenReplay()
+    {
+        PlayerPrefs.SetString("isReplay", "true");
+        Application.LoadLevel(Application.loadedLevelName);
+    }
 }

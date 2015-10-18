@@ -10,7 +10,7 @@ public class Collectables : MonoBehaviour {
 		if (other.tag == "Player") {
             
             timeControl.time = timeControl.time - 1;
-            timeControl.coinCollected++;
+            TimeControl.coinCollected++;
 
 			coinCount.coinCount++;
 			Destroy (gameObject);
