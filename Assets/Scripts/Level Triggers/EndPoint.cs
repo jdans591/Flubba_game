@@ -41,9 +41,9 @@ public class EndPoint : MonoBehaviour {
             //Create the replay string to send to database.
             MakeReplayString();
 
-            if(PlayerPrefs.GetString("isReplay").Equals("true"))
+            if(PlayerPrefs.GetInt("isReplay") == 1)
             {
-                PlayerPrefs.SetString("isReplay", "false");
+                PlayerPrefs.SetInt("isReplay", 0);
             }
             
 		}

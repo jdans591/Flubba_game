@@ -65,7 +65,7 @@ public class PlayerInput : MonoBehaviour {
 		collisionContinuing = false;
 
 
-        if(PlayerPrefs.GetString("isReplay").Equals("true"))
+        if(PlayerPrefs.GetInt("isReplay") == 1)
         {
             movementReplayInputs = new List<Vector3>();
             jumpReplayInputs = new List<Vector2>();
@@ -80,8 +80,6 @@ public class PlayerInput : MonoBehaviour {
         }
 
         counter = 0;
-        Debug.Log(PlayerPrefs.GetString("isReplay"));
-        
     }
 
 	/**
@@ -125,7 +123,7 @@ public class PlayerInput : MonoBehaviour {
         Vector3 replayInput;
         //Get keyboard input
       
-        if(PlayerPrefs.GetString("isReplay").Equals("true"))//true if isReplay string is true i.e. it's a replay.
+        if(PlayerPrefs.GetInt("isReplay") == 1)//true if isReplay string is true i.e. it's a replay.
         {
             replayInput = GetInputFromReplay();
             //Debug.Log(counter);
@@ -169,7 +167,7 @@ public class PlayerInput : MonoBehaviour {
 
 
 		//When the jump button is pressed.
-		if ((Input.GetKeyDown (KeyCode.Space) && PlayerPrefs.GetString("isReplay").Equals("false")) || (jumpReplayInputs[counter].y > 0.5 && PlayerPrefs.GetString("isReplay").Equals("true"))) {
+		if ((Input.GetKeyDown (KeyCode.Space) && PlayerPrefs.GetInt("isReplay") == 0) || (jumpReplayInputs[counter].y > 0.5 && PlayerPrefs.GetInt("isReplay") == 1)) {
             Debug.Log("Jump is pressed");
             //Simply jump if the object is on the ground. 
 			if (TouchingGround () || jumpDelay != 0) {

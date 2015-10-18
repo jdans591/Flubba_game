@@ -53,7 +53,7 @@ public class EndMenu : MonoBehaviour {
 
     public void OpenReplay()
     {
-        PlayerPrefs.SetString("isReplay", "true");
+        PlayerPrefs.SetInt("isReplay", 1);
         Application.LoadLevel(Application.loadedLevelName);
     }
 }
