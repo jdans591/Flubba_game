@@ -7,7 +7,7 @@ public class TimeControl : MonoBehaviour {
 	public Text text;
 
 	public float time;
-    public float coinCollected = 0;
+    public static float coinCollected = 0;
 
 	private float delay;
 	private float minute;

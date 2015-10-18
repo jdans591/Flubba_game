@@ -59,6 +59,12 @@ public class EndMenu : MonoBehaviour {
         Debug.Log("Upload complete!");
     }
 
+    public void OpenReplay()
+    {
+        PlayerPrefs.SetInt("isReplay", 1);
+        Application.LoadLevel(Application.loadedLevelName);
+    }
+
     void GetBestTime() {
         string best;
         string currentLevel = EditorApplication.currentScene;
