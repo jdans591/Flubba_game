@@ -36,6 +36,6 @@ public class BioStory : MonoBehaviour {
 	}
 
 	public void skipped(){
-		Application.LoadLevel("level2");
+		Application.LoadLevel("level3");
 	}
 }
