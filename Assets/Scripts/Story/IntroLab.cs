@@ -55,12 +55,12 @@ public class IntroLab : MonoBehaviour {
 		} else if (count == 4) {
 			//Fader fader;
 			//fader.EndScene();
-			Application.LoadLevel (10);
+			Application.LoadLevel ("intro_tutorial2");
 		}
 		
 	}
 
 	public void skipped(){
-		Application.LoadLevel(10);
+		Application.LoadLevel("level1");
 	}
 }

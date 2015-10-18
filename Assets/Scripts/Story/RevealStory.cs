@@ -55,11 +55,11 @@ public class RevealStory : MonoBehaviour {
 			countIntro++;
 
 		} else if (countIntro == 6) {
-			Application.LoadLevel(15);
+			Application.LoadLevel("end_physics");
 		}
 	}
 	
 	public void skipped(){
-		Application.LoadLevel(15);
+		Application.LoadLevel("level3");
 	}
 }

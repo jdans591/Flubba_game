@@ -68,7 +68,7 @@ public class Level1Story : MonoBehaviour {
 			countIntro++;
 
 		}else if (countIntro == 6){
-			Application.LoadLevel(4);
+			Application.LoadLevel("level1");
 			//StopCoroutine ("multipleTexts2");
 			//StartCoroutine ("multipleTexts2");
 			//multipleTexts("Voice: That doesn't matter right now.", "Voice: Right now you just need to get out of here.","Voice: Don't worry, I'll help you.");
@@ -77,6 +77,6 @@ public class Level1Story : MonoBehaviour {
 
 
 	public void skipped(){
-		Application.LoadLevel(4);
+		Application.LoadLevel("level1");
 	}
 }

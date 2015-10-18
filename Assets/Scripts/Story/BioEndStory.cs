@@ -71,7 +71,7 @@ public class BioEndStory : MonoBehaviour {
 		}else if (countIntro == 9){
 			//ChangeImage("bam");
 			//StartCoroutine("ChangeScene");
-			Application.LoadLevel(5);
+			Application.LoadLevel("level2");
 		}
 	}
 
@@ -80,6 +80,6 @@ public class BioEndStory : MonoBehaviour {
 	}
 
 	public void skipped(){
-		Application.LoadLevel(5);
+		Application.LoadLevel("level2");
 	}
 }
