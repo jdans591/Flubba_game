@@ -67,12 +67,12 @@ public class Storyboard : MonoBehaviour {
 			countIntro++;
 
 		}else if (countIntro == 7){
-			Application.LoadLevel(3);
+			Application.LoadLevel(13);
 		}
 	}
 	
 
 	public void skipped(){
-		Application.LoadLevel(3);
+		Application.LoadLevel(13);
 	}
 }
