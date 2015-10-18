@@ -20,7 +20,9 @@ public class EndMenu : MonoBehaviour {
 	private long finalScore;
 	private float finalTimeInFloat;
     private GameObject[] coins;
-    
+
+    public float[,] benchmark = new float[3, 4] { { 90, 120, 180, 300 }, { 20, 50, 90, 60 }, { 15, 35, 45, 20 } };
+
     void Start() {
         coins = GameObject.FindGameObjectsWithTag("Coin");
     }
@@ -28,6 +30,8 @@ public class EndMenu : MonoBehaviour {
 	public void display () {
 		finalTime = timeControl.text.text;
 		numCoin = coinCount.coinCount;
+
+        int jackpotMoney = AttemptForJackpot(); //check for jackpot winnings
 
         //coinText.text = numCoin.ToString () + "/" + coins.Length.ToString();
         // Display number of coins collected for that level and total coins in wallet
@@ -111,4 +115,63 @@ public class EndMenu : MonoBehaviour {
         string bestString = bestMins + ":" + bestSecs;
         return bestString;
     }
+
+    int AttemptForJackpot()
+    {
+        int randomNumber = Random.Range(1, 101); //generate a random number between 1 and 100.
+        float probability = 0; //initialise a value which will determine the success of a jackpot.
+        int level = 1; //initialise the current level value.
+
+        string currentscene = EditorApplication.currentScene; //identify the current level
+
+        switch (currentscene)
+        {
+            case "Assets/Scenes/Levels/level1.unity":
+                level = 1;
+                break;
+            case "Assets/Scenes/Levels/level2.unity":
+                level = 2;
+                break;
+            case "Assets/Scenes/Levels/level3.unity":
+                level = 3;
+                break;
+            case "Assets/Scenes/Levels/level4.unity":
+                level = 4;
+                break;
+            default:
+                break;
+        }
+
+        float recordtime = timeControl.time;
+
+        //assign higer values for probability the faster the player completed the level
+        if (recordtime <= benchmark[2, level - 1])
+        {
+            probability = 75;
+        } else if (recordtime <= benchmark[1, level - 1])
+        {
+            probability = 50;
+        } else
+        {
+            probability = 10;
+        }
+
+        //if randomNumber generated is within probability range, jackpot is fired.
+        if (randomNumber < probability)
+        {
+            int randomPrizeMoney = Random.Range(100, 1000); //generate a random number between 100 and 1000.
+
+            //update total coincount
+            int total = PlayerPrefs.GetInt("coinCount");
+            total += randomPrizeMoney;
+
+            //Write the new value back to the player prefs
+            PlayerPrefs.SetInt("coinCount", total);
+
+            return randomPrizeMoney;
+        }
+
+        return 0;
+    }
+
 }
