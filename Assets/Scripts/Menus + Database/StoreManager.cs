@@ -30,26 +30,24 @@ public class StoreManager : MonoBehaviour
     public Sprite Skin5;
     public Sprite Skin6;
 
-    public AnimationClip anim1;
-    public AnimationClip anim2;
-    public AnimationClip anim3;
-    public AnimationClip anim4;
-    public AnimationClip anim5;
-    public AnimationClip anim6;
+    public Button Button1;
+    public Button Button2;
+    public Button Button3;
+    public Button Button4;
+    public Button Button5;
+    public Button Button6;
+    public Button ButtonRandom;
 
-    public Button applyButton1;
-    public Button applyButton2;
-    public Button applyButton3;
-    public Button applyButton4;
-    public Button applyButton5;
-    public Button applyButton6;
-    public Button applyButtonRandom;
+    private Button[] buttons;
+    private string[] owned;
 
     void Start()
     {
         PlayerPrefs.SetInt("Green Slime", 1);
         PlayerPrefs.SetInt("Current Skin", 0);
         PlayerPrefs.SetInt("Random Select", 0);
+        buttons = new Button[] { Button1, Button2, Button3, Button4, Button5, Button6, ButtonRandom };
+        owned = new string[] { "Green Slime", "Blue Slime", "Light Blue Slime", "Orange Slime", "Purple Slime", "Red Slime", "Random Select" };
         CoinCount1.text = PlayerPrefs.GetInt("coinCount").ToString();
         conditionalOnAndOff();
     }
@@ -178,32 +176,32 @@ public class StoreManager : MonoBehaviour
         {
             case 1:
 
-                applyButtonChange("Green Slime", Skin1, anim1, applyButton1, 100, CoinCount1, skinNum);
+                ButtonChange("Green Slime", Skin1, Button1, 100, CoinCount1, skinNum);
                 PlayerPrefs.SetInt("Current Skin", 1);
                 break;
 
             case 2:
-                applyButtonChange("Blue Slime", Skin2, anim2, applyButton2, 100, CoinCount2, skinNum);
+                ButtonChange("Blue Slime", Skin2, Button2, 100, CoinCount2, skinNum);
                 PlayerPrefs.SetInt("Current Skin", 2);
                 break;
 
             case 3:
-                applyButtonChange("Light Blue Slime", Skin3, anim3, applyButton3, 100, CoinCount3, skinNum);
+                ButtonChange("Light Blue Slime", Skin3, Button3, 100, CoinCount3, skinNum);
                 PlayerPrefs.SetInt("Current Skin", 3);
                 break;
 
             case 4:
-                applyButtonChange("Orange Slime", Skin4, anim4, applyButton4, 100, CoinCount4, skinNum);
+                ButtonChange("Orange Slime", Skin4, Button4, 100, CoinCount4, skinNum);
                 PlayerPrefs.SetInt("Current Skin", 4);
                 break;
 
             case 5:
-                applyButtonChange("Purple Slime", Skin5, anim5, applyButton5, 100, CoinCount5, skinNum);
+                ButtonChange("Purple Slime", Skin5, Button5, 100, CoinCount5, skinNum);
                 PlayerPrefs.SetInt("Current Skin", 5);
                 break;
 
             case 6:
-                applyButtonChange("Red Slime", Skin6, anim6, applyButton6, 100, CoinCount6, skinNum);
+                ButtonChange("Red Slime", Skin6, Button6, 100, CoinCount6, skinNum);
                 PlayerPrefs.SetInt("Current Skin", 6);
                 break;
 
@@ -219,51 +217,54 @@ public class StoreManager : MonoBehaviour
     void conditionalOnAndOff()
     {
 
+        foreach (Button button in buttons)
+        {
+
+        }
+
         if (PlayerPrefs.GetInt("coinCount") < 50)
         {
-            applyButtonRandom.interactable = false;
-            applyButton1.interactable = false;
-            applyButton2.interactable = false;
-            applyButton3.interactable = false;
-            applyButton4.interactable = false;
-            applyButton5.interactable = false;
-            applyButton6.interactable = false;
+            ButtonRandom.interactable = false;
+            Button1.interactable = false;
+            Button2.interactable = false;
+            Button3.interactable = false;
+            Button4.interactable = false;
+            Button5.interactable = false;
+            Button6.interactable = false;
         }
         else
         {
-            applyButtonRandom.interactable = true;
+            ButtonRandom.interactable = true;
             if (PlayerPrefs.GetInt("coinCount") < 100)
             {
-                applyButton1.interactable = false;
-                applyButton2.interactable = false;
-                applyButton3.interactable = false;
-                applyButton4.interactable = false;
-                applyButton5.interactable = false;
-                applyButton6.interactable = false;
+                Button1.interactable = false;
+                Button2.interactable = false;
+                Button3.interactable = false;
+                Button4.interactable = false;
+                Button5.interactable = false;
+                Button6.interactable = false;
             }
             else
             {
-                applyButton1.interactable = true;
-                applyButton2.interactable = true;
-                applyButton3.interactable = true;
-                applyButton4.interactable = true;
-                applyButton5.interactable = true;
-                applyButton6.interactable = true;
+                Button1.interactable = true;
+                Button2.interactable = true;
+                Button3.interactable = true;
+                Button4.interactable = true;
+                Button5.interactable = true;
+                Button6.interactable = true;
             }
         }
     }
 
-    void applyButtonChange(string intName, Sprite skin, AnimationClip anim, Button applyButton, int price, Text wallet, int skinNum)
+    void ButtonChange(string intName, Sprite skin, Button button, int price, Text wallet, int skinNum)
     {
         if (PlayerPrefs.GetInt(intName) == 1)
         {
             player.GetComponent<SpriteRenderer>().sprite = skin;
-            player.GetComponent<Animation>().clip = anim;
         }
         else
         {
             player.GetComponent<SpriteRenderer>().sprite = skin;
-            player.GetComponent<Animation>().clip = anim;
             PlayerPrefs.SetInt(intName, 1);
             if (PlayerPrefs.GetInt("Random Select") == 0)
             {
