@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class TimeEntry : MonoBehaviour {
 
+
     public Text Player;
     public Text Time;
     public string guid;
@@ -12,6 +13,7 @@ public class TimeEntry : MonoBehaviour {
     // Set the text inside player column
     public void setPlayer(string x)
     {
+       
         Player.text = x;
     }
 
@@ -89,4 +91,11 @@ public class TimeEntry : MonoBehaviour {
             ProgressCircle.SetActive(false);
         }
     }
+
+
+
+	
+
+
+
 }

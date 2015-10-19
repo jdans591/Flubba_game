@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 [RequireComponent(typeof(PlayerPhysics))]
 [RequireComponent(typeof(LevelManager))]
+
 public class PlayerInput : MonoBehaviour
 {
 
@@ -93,11 +94,13 @@ public class PlayerInput : MonoBehaviour
         counter = 0;
     }
 
+
     /**
 	 * Update is called every frame in order to update the player with the user's input and calculate the next movment to be handled by the PlayerPhysics class.
 	 * Move() takes a Vector2 argument for the amount to be moved and carries it out on the player object. While an object is colliding with a surface, the controller.collisions field
 	 * will provide information to the type of collision which can be used to test for jump validity, wall jumping etc.
 	 */
+
     void Update()
     {
 
@@ -425,3 +428,6 @@ public class PlayerInput : MonoBehaviour
         }
     }
 }
+
+
+
