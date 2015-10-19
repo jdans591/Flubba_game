@@ -50,6 +50,11 @@ public class StoreManager : MonoBehaviour
         PlayerPrefs.SetInt("Green Slime", 1);
         PlayerPrefs.SetInt("Current Skin", 0);
         PlayerPrefs.SetInt("Random Select", 0);
+        //PlayerPrefs.SetInt("Blue Slime", 0);
+        //PlayerPrefs.SetInt("Light Blue Slime", 0);
+        //PlayerPrefs.SetInt("Orange Slime", 0);
+        //PlayerPrefs.SetInt("Purple Slime", 0);
+        //PlayerPrefs.SetInt("Red Slime", 0);
         CoinCount1.text = PlayerPrefs.GetInt("coinCount").ToString();
         conditionalOnAndOff();
         //player.GetComponent<Animation>().AddClip(anim1, "greenAnim");

@@ -5,14 +5,9 @@ using System.Collections;
 public class IntroLab : MonoBehaviour {
 	
 	public Text text;
-	public Text flubText;
-	public Text evilText;
 	private int count = 0;
-	//public Text btnText;
 	private int countIntro = -1;
-	ButtonText contButton;
-	//Fader fader;
-	
+
 	// Use this for initialization
 	void Start () {
 		setText("\"Knife..\"");
@@ -21,24 +16,18 @@ public class IntroLab : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		//user can either press the "Continue" button or press return to progress through story
 		if (Input.GetKeyDown("return")){
-			//count++;
 			clicked();
 		}
 	}
-	
+
+	//set dialogue for shadowed figures
 	public void setText(string msg){
 		text.text = msg;
 	}
 	
-	public void setFlubText(string msg){
-		flubText.text = msg;
-	}
-	
-	public void setEvilText(string msg){
-		evilText.text = msg;
-	}
-	
+	//prgress through story
 	public void clicked(){
 		if (count == 0) {
 			setText ("\"Scalpel..\"");
@@ -53,13 +42,13 @@ public class IntroLab : MonoBehaviour {
 			setText ("\"Grab the shotgun! Grab the shotgun!\"");
 			count++;
 		} else if (count == 4) {
-			//Fader fader;
-			//fader.EndScene();
+			//go to next scene in story
 			Application.LoadLevel ("intro_tutorial2");
 		}
 		
 	}
 
+	//bypass story overlay and go straight to level
 	public void skipped(){
 		Application.LoadLevel("level1");
 	}
