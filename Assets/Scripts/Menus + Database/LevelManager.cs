@@ -19,9 +19,6 @@ public class LevelManager : MonoBehaviour {
 	private GameObject flubba;
 
 	void Awake () {
-
-		Debug.Log (PlayerPrefs.GetInt ("Current Skin"));
-
 		switch (PlayerPrefs.GetInt ("Current Skin")) {
 		case 1:
 			flubba = green;
