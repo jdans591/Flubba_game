@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class EndMenu : MonoBehaviour {
 
-	public GameObject endMenuCanvas;
+	public Canvas endMenuCanvas;
 	public GameObject jackpotCanvas;
 	public Text coinText;
 	public Text timeText;
@@ -13,6 +13,11 @@ public class EndMenu : MonoBehaviour {
 	public CoinCount coinCount;
 	public TimeControl timeControl;
 	public DatabaseManager dbManager;
+
+    public Button replay;
+    public Button continued;
+    public Button submit;
+
 
 	private string finalTime;
 	private int numCoin;
@@ -25,6 +30,12 @@ public class EndMenu : MonoBehaviour {
 
 	void Start() {
 		coins = GameObject.FindGameObjectsWithTag("Coin");
+
+        if(PlayerPrefs.GetInt("isReplay") == 1)
+        {
+            
+            submit.interactable = false;
+        }
 	}
 
 	// Check if player unlocks a jackpot

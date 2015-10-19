@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Text;
+using UnityEngine.UI;
 
 public class EndPoint : MonoBehaviour {
 
@@ -38,10 +39,17 @@ public class EndPoint : MonoBehaviour {
 			UpdateCoinCount(endMenu.coinCount.coinCount);
 
 			endMenu.timeControl.StopTimer(); // Stop the timer
+
+         
+            
 			endMenu.display();
 			endMenuCanvas.SetActive(true); // Display the end screen
 
-			other.gameObject.SetActive(false); // Disable the player to remove it from the screen
+         
+
+
+
+            other.gameObject.SetActive(false); // Disable the player to remove it from the screen
 
 
             //Create the replay string to send to database.
@@ -63,14 +71,7 @@ public class EndPoint : MonoBehaviour {
             }
             
 
-			// Create the replay string to send to database.
-			MakeReplayString();
-
-			// If isReplay is set to true, set it back to false
-			if (PlayerPrefs.GetInt("isReplay") == 1) {
-				PlayerPrefs.SetInt("isReplay", 0);
-			}
-
+		
 		}
 	}
 
