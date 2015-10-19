@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class EndMenu : MonoBehaviour {
@@ -128,20 +127,20 @@ public class EndMenu : MonoBehaviour {
         float probability = 0; //initialise a value which will determine the success of a jackpot.
         int level = 1; //initialise the current level value.
 
-        string currentscene = EditorApplication.currentScene; //identify the current level
+        string currentScene = Application.loadedLevelName; // identify the current level
 
-        switch (currentscene)
+        switch (currentScene)
         {
-            case "Assets/Scenes/Levels/level1.unity":
+            case "level1":
                 level = 1;
                 break;
-            case "Assets/Scenes/Levels/level2.unity":
+            case "level2":
                 level = 2;
                 break;
-            case "Assets/Scenes/Levels/level3.unity":
+            case "level3":
                 level = 3;
                 break;
-            case "Assets/Scenes/Levels/level4.unity":
+            case "level4":
                 level = 4;
                 break;
             default:
