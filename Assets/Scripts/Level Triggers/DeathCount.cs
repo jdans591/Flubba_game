@@ -8,14 +8,15 @@ public class DeathCount : MonoBehaviour {
 	public PlayerInput playerInput;
 	public Text text;
 
-	// Use this for initialization
+	// Used for initialization
 	void Start () {
 		playerInput = GetComponent<PlayerInput> ();
+		// Set default deaths
 		text.text = "Death:0";
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
+		// Update the on-screen text with the deathcount
 		text.text = "Death:" + deathCount.ToString ();
 	}
 }
