@@ -57,7 +57,7 @@ public class EndMenu : MonoBehaviour {
     {
         Application.LoadLevel(sceneToChangeTo);
     }
-
+    
     // Return to level select screen
     public void continueWithNext () {
 		Application.LoadLevel ("level_select");
@@ -70,7 +70,8 @@ public class EndMenu : MonoBehaviour {
 
     public void OpenReplay()
     {
-        PlayerPrefs.SetInt("isReplay", 1);
+        PlayerPrefs.SetInt("isReplay", 1);//set replay status to true.
+        PlayerPrefs.Save();
         Application.LoadLevel(Application.loadedLevelName);
     }
 
@@ -80,6 +81,7 @@ public class EndMenu : MonoBehaviour {
         // Check which level is currently in play
         switch (currentLevel) {
             case "level1":
+                Debug.Log(PlayerPrefs.GetFloat("level1Best"));
                 best = BestToString(PlayerPrefs.GetFloat("level1Best"));
                 // Check that a best time has been set
                 if (PlayerPrefs.GetFloat("level1Best") != 0) {
@@ -116,7 +118,7 @@ public class EndMenu : MonoBehaviour {
     string BestToString(float bestFloat) {
         int bestMins = (int)bestFloat / 60;
         string bestSecs = (bestFloat % 60).ToString();
-        bestSecs = bestSecs.Substring(0, 5);
+        bestSecs = bestSecs.Substring(0, 4);
         string bestString = bestMins + ":" + bestSecs;
         return bestString;
     }

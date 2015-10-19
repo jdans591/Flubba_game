@@ -23,6 +23,7 @@ public class DatabaseManager : MonoBehaviour {
         //create a form to submit with the post request to web api
         WWWForm form2 = new WWWForm();
         form2.AddField("fileid", g.ToString());
+        
         form2.AddField("content", PlayerPrefs.GetString("replayString"));
 
         WWW www = new WWW(url, form); // post request 1

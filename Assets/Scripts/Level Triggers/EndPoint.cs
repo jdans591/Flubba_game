@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Text;
 
 public class EndPoint : MonoBehaviour {
 
@@ -19,7 +20,10 @@ public class EndPoint : MonoBehaviour {
 	void Start () {
 		audio = GetComponent<AudioSource> ();
 		isPaused = false;
-	}
+
+        //initialise replayString to blank
+        replayString = "";
+    }
 
 	void OnTriggerEnter2D (Collider2D other) {
         //when flubba reaches end of level.
@@ -39,12 +43,21 @@ public class EndPoint : MonoBehaviour {
             other.gameObject.SetActive(false); //disable flubba to prevent further action and disappear into pipe
 
             //Create the replay string to send to database.
-            MakeReplayString();
+            if (PlayerPrefs.GetInt("isReplay") == 1) // if it's a replay
+            {
+
+            } else //make replay string only if the current mode is not replay mode.
+            {
+                MakeReplayString();
+            }
+
+            
 
             //if isReplay is set to true, set it back to false
             if(PlayerPrefs.GetInt("isReplay") == 1)
             {
                 PlayerPrefs.SetInt("isReplay", 0);
+                PlayerPrefs.Save();
             }
             
 		}
@@ -105,22 +118,43 @@ public class EndPoint : MonoBehaviour {
     //Create the replayString to send to the database.
     void MakeReplayString()
     {
-        for(int i = 0; i < PlayerInput.movementInputs.Count; i++)
+        //Reset playerprefs replayString
+        PlayerPrefs.SetString("replayString", "");
+
+
+
+        StringBuilder builder = new StringBuilder();
+        builder.Append(Application.loadedLevelName + System.Environment.NewLine);
+
+        Debug.Log("currentPosition length is : " + PlayerInput.currentPosition.Count);
+
+        //Append each frame positions to make a single string.
+        for (int i = 0; i < PlayerInput.currentPosition.Count; i++)
         {
-            replayString = replayString + PlayerInput.movementInputs[i].x + "," + PlayerInput.movementInputs[i].y + "," + PlayerInput.movementInputs[i].z + ";";
+
+            builder.Append(PlayerInput.currentPosition[i].x + "," + PlayerInput.currentPosition[i].y + "," + PlayerInput.currentPosition[i].z + "," + PlayerInput.currentPosition[i].w + ";");
+
+
+         
 
         }
+
+        string replayString = builder.ToString();
 
         replayString = replayString + System.Environment.NewLine;
 
-        for(int i = 0; i < PlayerInput.jumpInputs.Count; i++)
-        {
-            replayString = replayString + PlayerInput.jumpInputs[i].x + "," + PlayerInput.jumpInputs[i].y + ";";
-        }
-
-        replayString = Application.loadedLevelName + System.Environment.NewLine + replayString;
 
 
         PlayerPrefs.SetString("replayString", replayString);
+
+     
+
+      
+
+    
+
+     
+
+        PlayerPrefs.Save();
     }
 }

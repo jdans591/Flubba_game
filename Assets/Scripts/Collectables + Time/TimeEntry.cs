@@ -32,6 +32,8 @@ public class TimeEntry : MonoBehaviour {
         //make a get request to database to download corresponding replay file.
         string url = "https://microsoft-apiapp72ef49a46b6242d28d294f2cda80c2cf.azurewebsites.net/api/Replays?fileid="+guid;
         WWW www = new WWW(url);
+
+        Debug.Log(guid);
         StartCoroutine(WaitForRequest(www, currentlevel));
 
     }
@@ -39,12 +41,47 @@ public class TimeEntry : MonoBehaviour {
     IEnumerator WaitForRequest(WWW www, int currentlevel)
     {
         yield return www;
+        System.IO.File.WriteAllText(@"C:\Users\Dhanasit\Documents\Unity_last\Sample3.txt", www.ToString());
         // check for errors
         if (www.error == null)
         {
-            Debug.Log("WWW Ok!: " + www.text);
+         
+           
+            //set string to be the replayString
+            string str = www.text;
+          
+
+            Debug.Log("WaitForRequest called");
+
+        
+
+            string[] delimiters = new string[] { "\\r\\n" };
+
+            string[] split = str.Split(delimiters, System.StringSplitOptions.None);
+
+
+            str = split[0] + System.Environment.NewLine + split[1] + System.Environment.NewLine;
+
+            
+
+
+
+
+            
+
+            //set the replayString in Playerprefs to the correct string for PlayerInput class to pull from
+            PlayerPrefs.SetString("replayString", str);
+            //Set replay mode to be active.
+            PlayerPrefs.SetInt("isReplay", 1);
+
+
+            Application.LoadLevel("level" + currentlevel.ToString());
 
             ProgressCircle.SetActive(false);
+
+
+
+
         }
         else
         {

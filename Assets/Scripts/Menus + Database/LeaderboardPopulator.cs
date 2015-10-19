@@ -64,9 +64,12 @@ public class LeaderboardPopulator : MonoBehaviour {
             Debug.Log("Fetched: " + www.text);
             JSONObject obj = new JSONObject(www.text); //convert response body into a processable format
 
+          
+
             // fill data into each timeentry using the response returned from get request
             for (int j = 0; j < obj.list.Count; j++)
             {
+
                 string name = obj.list[j].list[0].str;
                 string time = obj.list[j].list[1].str;
                 string guid = obj.list[j].list[3].str;
@@ -74,6 +77,8 @@ public class LeaderboardPopulator : MonoBehaviour {
                 TList2D[j, levelNumber - 1].Player.text = name;
                 TList2D[j, levelNumber - 1].Time.text = time;
                 TList2D[j, levelNumber - 1].guid = guid;
+
+          
             }
             ProgressCircle.SetActive(false); //turn off progress circle
         }
