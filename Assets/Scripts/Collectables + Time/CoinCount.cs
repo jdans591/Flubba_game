@@ -8,12 +8,12 @@ public class CoinCount : MonoBehaviour {
 	public Text text;
 
 	// Initializes displayed coin count as 0
-	void Start () {
+	void Start() {
 		text.text = "Coins:0";
 	}
-	
-	// Display number of coins collected for current level
-	void Update () {
-		text.text = "Coins:" + coinCount.ToString ();
+
+	// Display number of coins collected in the current level
+	void Update() {
+		text.text = "Coins:" + coinCount.ToString();
 	}
 }
