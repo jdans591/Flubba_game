@@ -66,9 +66,7 @@ public class EndMenu : MonoBehaviour {
 
     public void uploadScore(string level)
     {
-        Debug.Log("Uploading Score...");
-        dbManager.PostScore(level, playerName.text, timeText.text);
-        Debug.Log("Upload complete!");
+        dbManager.PostScore(level, playerName.text, timeText.text); //Post score to database
     }
 
     public void OpenReplay()
@@ -124,6 +122,7 @@ public class EndMenu : MonoBehaviour {
         return bestString;
     }
 
+    // Returns a reward(coins) by chance.
     int AttemptForJackpot()
     {
         int randomNumber = Random.Range(1, 101); //generate a random number between 1 and 100.
@@ -155,10 +154,10 @@ public class EndMenu : MonoBehaviour {
         //assign higer values for probability the faster the player completed the level
         if (recordtime <= benchmark[2, level - 1])
         {
-            probability = 101; //revert back to 75 after demo
+            probability = 75; 
         } else if (recordtime <= benchmark[1, level - 1])
         {
-            probability = 101; //revert back to 50 after demo
+            probability = 50; 
         } else
         {
             probability = 10;
