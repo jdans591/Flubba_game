@@ -23,7 +23,7 @@ public class EndPoint : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D (Collider2D other) {
-		if (other.tag == "Player") {
+		if (other.tag == "Player") { //when flubba reaches end of level.
 
         // Update level select GUI to show player progress through each of the 4 different levels
         UpdateProgress();
