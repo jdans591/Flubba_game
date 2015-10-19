@@ -3,30 +3,30 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class RevealStory : MonoBehaviour {
-
-
+	
 	public Text elonText;
 	public Text flbText;
-	//public Text btnText;
 	private int countIntro = 0;
-	public Image myImage;
-	
-	public void Update(){
-		if (Input.GetKeyDown("return")){
-			//countIntro++;
 
+	// Update is called once per frame
+	public void Update(){
+		//user can either press the "Continue" button or press return to progress through story
+		if (Input.GetKeyDown("return")){
 			clicked();
 		}
 	}
-	
+
+	//set dialogue for Elon Bohr
 	void setElonText(string msg){
 		elonText.text = msg;
 	}
-	
+
+	//set dialogue for Flubba
 	void setFlubText(string msg){
 		flbText.text = msg;
 	}
-	
+
+	//progress through story
 	public void clicked(){
 		if (countIntro == 0) {
 			setFlubText ("Flubba: What have I done??");
@@ -39,12 +39,10 @@ public class RevealStory : MonoBehaviour {
 			setFlubText ("");
 			setElonText ("Elon: You must stop him.");
 			countIntro++;
-
 		} else if (countIntro == 3) {
 			setElonText("");
 			setFlubText ("Flubba: Where can I find him?");
 			countIntro++;
-
 		} else if (countIntro == 4) {
 			setFlubText ("");
 			setElonText ("Elon: He's inside this physics lab, but be careful!");
@@ -53,12 +51,13 @@ public class RevealStory : MonoBehaviour {
 			setFlubText ("");
 			setElonText ("Elon: This is our last chance Flubba, good luck.");
 			countIntro++;
-
 		} else if (countIntro == 6) {
+			//go to next scene of story
 			Application.LoadLevel("end_physics");
 		}
 	}
-	
+
+	//bypass story; go straight to level
 	public void skipped(){
 		Application.LoadLevel("level4");
 	}
