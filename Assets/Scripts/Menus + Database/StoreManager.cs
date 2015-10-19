@@ -269,9 +269,9 @@ public class StoreManager : MonoBehaviour {
 				texts[i].text = "Select";
 				buttons[i].interactable = true;
 			}
-			// If skin is not owned, the button should say "Apply"
+			// If skin is not owned, the button should say "Buy"
 			else {
-				texts[i].text = "Apply";
+				texts[i].text = "Buy";
 			}
 		}
 
