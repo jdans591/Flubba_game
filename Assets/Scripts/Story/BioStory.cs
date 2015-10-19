@@ -10,16 +10,18 @@ public class BioStory : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		//user can either press the "Continue" button or press return to progress through story
 		if (Input.GetKeyDown("return")){
-			//countIntro++;
 			clickedIntro();
 		}
 	}
-	
+
+	//set dialogue for mysterious evil entity
 	public void setEvilText(string msg){
 		evilText.text = msg;
 	}
-	
+
+	//progress through story
 	public void clickedIntro(){
 		if (countIntro == 0) {
 			setEvilText ("Voice: Congratulations, you've escaped from Bohr's chemistry lab.");
@@ -31,10 +33,12 @@ public class BioStory : MonoBehaviour {
 			setEvilText ("Voice: You're going to have to kill him if you want any chance of escaping.");
 			countIntro++;
 		} else if (countIntro == 3) {
+			//go to next scene of story
 			Application.LoadLevel("end_bio");
 		}
 	}
 
+	//bypass story; go straight to level
 	public void skipped(){
 		Application.LoadLevel("level3");
 	}

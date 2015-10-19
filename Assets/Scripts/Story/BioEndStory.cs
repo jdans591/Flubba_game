@@ -6,29 +6,28 @@ public class BioEndStory : MonoBehaviour {
 	
 	public Text elonText;
 	public Text flbText;
-	//public Text btnText;
 	public Text evilText;
 	private int countIntro = 0;
-	public Image myImage;
 
+	// Update is called once per frame
 	public void Update(){
+		//user can either press the "Continue" button or press return to progress through story
 		if (Input.GetKeyDown("return")){
-
 			clicked();
-			//countIntro++;
-
-			
 		}
 	}
-	
+
+	//set dialogue for Elon Bohr
 	void setElonText(string msg){
 		elonText.text = msg;
 	}
 
+	//set dialogue for Flubba
 	void setFlubText(string msg){
 		flbText.text = msg;
 	}
-	
+
+	//progress through story
 	public void clicked(){
 		if (countIntro == 0) {
 			setFlubText ("Flubba: It's over Elon. I'm getting out of this place.");
@@ -59,26 +58,19 @@ public class BioEndStory : MonoBehaviour {
 			evilText.text = "";
 			setElonText ("Elon: No, I am not your creator.");
 			countIntro++;
-
 		} else if (countIntro == 7) {
 			setElonText ("Elon: Your sole purpose is to cripple those who would dare stand up to your creator.");
 			countIntro++;
-
 		}else if (countIntro == 8){
 			setElonText ("Elon: I have something to show you, meet me in the physics lab...");
 			countIntro++;
-
 		}else if (countIntro == 9){
-			//ChangeImage("bam");
-			//StartCoroutine("ChangeScene");
+			//story finished - go to level
 			Application.LoadLevel("level3");
 		}
 	}
 
-	public void ChangeImage (string newImageTitle){
-		myImage.sprite = Resources.Load<Sprite>(newImageTitle);
-	}
-
+	//bypass story overlay and go straight to level
 	public void skipped(){
 		Application.LoadLevel("level3");
 	}
