@@ -11,6 +11,7 @@ public class BunsenBurnerController : MonoBehaviour {
 
     void Awake()
     {
+        //retrieve audio source for the bunsen burner
         audio = GetComponent<AudioSource>();
         //attain child game object for the fire spawn of the bunsen burner
         fireSpawn = this.gameObject.transform.GetChild(0).gameObject;
@@ -27,6 +28,7 @@ public class BunsenBurnerController : MonoBehaviour {
     void OperateFire()
     {
         //if the bunsen burner is off, set to be on and instantiate Fire gameobject by spawn
+        //also play sound
         if (!fireOn)
         {
             audio.Play();
@@ -35,6 +37,7 @@ public class BunsenBurnerController : MonoBehaviour {
             fireOn = true;
         }
         //if the bunsen burner is on, set to be off and destroy current Fire gameobject
+        //also stop sound
         else
         {
             audio.Stop();
