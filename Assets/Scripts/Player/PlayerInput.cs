@@ -60,11 +60,9 @@ public class PlayerInput : MonoBehaviour {
 		//Player ability setup
 		airCharge = 0;
 
-
 		//Collision checking for wall sliding speed
 		collisionEnter = false;
 		collisionContinuing = false;
-
 
         if(PlayerPrefs.GetInt("isReplay") == 1)
         {
@@ -106,7 +104,6 @@ public class PlayerInput : MonoBehaviour {
 			jumpDelay--;
 		}
 
-
 		// The current definition of a vertical wall is a platform with at least approx 75 degrees of elevation from horizontal.
 		//Vertical collision detection. If the player touches the ground or ceiling set vertical velocity to zero.
 		if (TouchingCeiling () || TouchingGround ()) {
@@ -116,9 +113,6 @@ public class PlayerInput : MonoBehaviour {
 				airCharge = 1;
 			}
 		}
-
-
-
 
         Vector2 input;
         Vector3 replayInput;
@@ -137,10 +131,6 @@ public class PlayerInput : MonoBehaviour {
             input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
             RecordInput(input);
         }
-		
-
-
-
 
 		//Ignore left button if the object is on the right wall, and ignore right button if the object is on the left wall. 
 		//Also, if the down button is pressed while the object is on a wall, it will slightly move the object off it 
@@ -163,9 +153,6 @@ public class PlayerInput : MonoBehaviour {
 				}
 			}
 		}
-
-        
-
 
 		//When the jump button is pressed.
 		if ((Input.GetKeyDown (KeyCode.Space) && PlayerPrefs.GetInt("isReplay") == 0) || (jumpReplayInputs[counter].y > 0.5 && PlayerPrefs.GetInt("isReplay") == 1)) {
@@ -257,31 +244,21 @@ public class PlayerInput : MonoBehaviour {
 
     void ProcessReplay(string replayString)
     {
-        //replay = ............;
-        //replay = information from database.......
-
         //split the replay string into sections
         char[] delimiters = new char[] { ';', ','};
         string[] split = replayString.Split(new string[] { System.Environment.NewLine }, System.StringSplitOptions.None);
-        //string[] split = replay.Split(new string[] { System.Environment.NewLine }, System.StringSplitOptions.None);
-
         string[] line1 = split[0].Split(delimiters);
         string[] line2 = split[1].Split(delimiters);
         string[] line3 = split[2].Split(delimiters);
-
 
         //convert the replay string sections into vector inputs to feed into the program.
         for (int i = 0; i < line2.Length - 2; i = i + 3)
         {
             movementReplayInputs.Add(new Vector3(float.Parse(line2[i + 2]), float.Parse(line2[i]), float.Parse(line2[i + 1])));
-
-
         }
         for (int i = 0; i < line3.Length - 1; i = i + 2)
         {
             jumpReplayInputs.Add(new Vector2(float.Parse(line3[i + 1]), float.Parse(line3[i])));
-
-
         }
 
         Debug.Log("Finished processing replay");

@@ -18,6 +18,7 @@ public class LevelManager : MonoBehaviour {
 
 	private GameObject flubba;
 
+    // Set Flubba skins
 	void Awake () {
 		switch (PlayerPrefs.GetInt ("Current Skin")) {
 		case 1:
@@ -54,11 +55,6 @@ public class LevelManager : MonoBehaviour {
 		RespawnPlayer ();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-	
 	public void RespawnPlayer () {
 		currentFlubba.transform.position = currentCheckpoint.transform.position;
 	}
@@ -67,9 +63,9 @@ public class LevelManager : MonoBehaviour {
 		if (other.gameObject.tag == "Player") {
 			HandleDeath ();
 		}
-		//Debug.Log ("object left the game area");
 	}
 
+    // Process player death
 	public void HandleDeath () {
 		audio.clip = deathAudioClip;
 		audio.Play ();

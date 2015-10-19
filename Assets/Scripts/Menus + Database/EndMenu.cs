@@ -26,6 +26,7 @@ public class EndMenu : MonoBehaviour {
         coins = GameObject.FindGameObjectsWithTag("Coin");
     }
 
+    // Check if player unlocks a jackpot
 	public void display () {
 		finalTime = timeControl.text.text;
 		numCoin = coinCount.coinCount;
@@ -39,7 +40,6 @@ public class EndMenu : MonoBehaviour {
             numCoin += jackpotMoney;
         }
 
-        //coinText.text = numCoin.ToString () + "/" + coins.Length.ToString();
         // Display number of coins collected for that level and total coins in wallet
         coinsCollectedText.text = "+" + numCoin.ToString();
         coinText.text = PlayerPrefs.GetInt("coinCount").ToString();
@@ -58,6 +58,7 @@ public class EndMenu : MonoBehaviour {
         Application.LoadLevel(sceneToChangeTo);
     }
 
+    // Return to level select screen
     public void continueWithNext () {
 		Application.LoadLevel ("level_select");
 	}
@@ -164,7 +165,6 @@ public class EndMenu : MonoBehaviour {
         //if randomNumber generated is within probability range, jackpot is fired.
         if (randomNumber < probability)
         {
-            Debug.Log("JACKPOT!");
             int randomPrizeMoney = Random.Range(100, 1000); //generate a random number between 100 and 1000.
 
             //update total coincount

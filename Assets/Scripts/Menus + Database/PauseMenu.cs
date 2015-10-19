@@ -7,8 +7,6 @@ public class PauseMenu : MonoBehaviour {
 	public bool disabled;
 	public GameObject pauseMenuCanvas;
 
-
-
 	// Update is called once per frame
 	void Update () {
         // check if pause menu has been disabled by end menu (due to flubba reaching end of level)

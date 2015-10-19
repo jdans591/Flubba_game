@@ -5,9 +5,7 @@ using UnityEngine.UI;
 // Controls visibility of leaderboard screens for different levels
 public class LeaderboardManager : MonoBehaviour {
 
-    //public GameObject CanvasLevel1 = GameObject.Find("CanvasLevel1");
     public GameObject CanvasLevel1;
-    //public GameObject CanvasLevel2 = GameObject.Find("CanvasLevel2");
     public GameObject CanvasLevel2;
     public GameObject CanvasLevel3;
     public GameObject CanvasLevel4;
@@ -47,7 +45,6 @@ public class LeaderboardManager : MonoBehaviour {
                 CanvasLevel3.SetActive(true);
                 break;
         }
-
     }
 	
 }

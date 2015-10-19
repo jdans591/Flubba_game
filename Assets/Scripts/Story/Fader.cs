@@ -6,16 +6,14 @@ public class Fader : MonoBehaviour
 	public float fadeSpeed = 0.5f;          // Speed that the screen fades to and from black.
 	
 	
-	private bool sceneStarting = true;      // Whether or not the scene is still fading in.
-	
+	private bool sceneStarting = true;      // Whether or not the scene is still fading in. 
 	
 	void Awake ()
 	{
 		// Set the texture so that it is the the size of the screen and covers it.
 		GetComponent<GUITexture>().pixelInset = new Rect(0f, 0f, Screen.width, Screen.height);
 	}
-	
-	
+
 	void Update ()
 	{
 		// If the scene is starting...
@@ -26,20 +24,17 @@ public class Fader : MonoBehaviour
 
 	}
 	
-	
 	void FadeToClear ()
 	{
 		// Lerp the colour of the texture between itself and transparent.
 		GetComponent<GUITexture>().color = Color.Lerp(GetComponent<GUITexture>().color, Color.clear, fadeSpeed * Time.deltaTime);
 	}
 	
-	
 	void FadeToBlack ()
 	{
 		// Lerp the colour of the texture between itself and black.
 		GetComponent<GUITexture>().color = Color.Lerp(GetComponent<GUITexture>().color, Color.black, fadeSpeed * Time.deltaTime);
 	}
-	
 	
 	void StartScene ()
 	{
@@ -57,7 +52,6 @@ public class Fader : MonoBehaviour
 			sceneStarting = false;
 		}
 	}
-	
 	
 	public void EndScene ()
 	{
