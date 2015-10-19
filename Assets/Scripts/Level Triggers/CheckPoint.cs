@@ -8,6 +8,7 @@ public class CheckPoint : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        //find the level manager and refernce it
 		levelManager = FindObjectOfType<LevelManager> ();
 	}
 	

@@ -26,7 +26,8 @@ public class LeaderboardPopulator : MonoBehaviour {
         CList.Add(CL3);
         CList.Add(CL4);
 
-        for (int i = 0; i < 4; i++)    //change i to 4 later
+        //loop through 2D array TList, and initilize elements Timeentrys
+        for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 8; j++)
             {
@@ -34,6 +35,7 @@ public class LeaderboardPopulator : MonoBehaviour {
             }
         }
 
+        //make get request to online DB to fetch top 8 scores for each level
         string url = "https://microsoft-apiapp72ef49a46b6242d28d294f2cda80c2cf.azurewebsites.net/api/Values/1";
         WWW www = new WWW(url);
         StartCoroutine(WaitForRequest(www, 1));
@@ -60,8 +62,9 @@ public class LeaderboardPopulator : MonoBehaviour {
         {
             Debug.Log("WWW Ok!: " + www.text);
             Debug.Log("Fetched: " + www.text);
-            JSONObject obj = new JSONObject(www.text);
+            JSONObject obj = new JSONObject(www.text); //convert response body into a processable format
 
+            // fill data into each timeentry using the response returned from get request
             for (int j = 0; j < obj.list.Count; j++)
             {
                 string name = obj.list[j].list[0].str;
@@ -72,12 +75,12 @@ public class LeaderboardPopulator : MonoBehaviour {
                 TList2D[j, levelNumber - 1].Time.text = time;
                 TList2D[j, levelNumber - 1].guid = guid;
             }
-            ProgressCircle.SetActive(false);
+            ProgressCircle.SetActive(false); //turn off progress circle
         }
         else
         {
             Debug.Log("WWW Error: " + www.error);
-            ProgressCircle.SetActive(false);
+            ProgressCircle.SetActive(false); //turn off progress circle
         }
     }
 }
