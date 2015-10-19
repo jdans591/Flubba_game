@@ -13,7 +13,7 @@ public class PlayerDeathTest : MonoBehaviour {
 		LM = levelManager.GetComponent<LevelManager>();
 		LM.HandleDeath();
 
-		if (LM.currentFlubba.transform.position == LM.currentCheckpoint.transform.position && LM.deathCount.deathCount == 1) {
+		if (LM.currentFlubba.transform.position == LM.currentCheckpoint.transform.position && LM.deathCount.deathCount > 0) {
 			IntegrationTest.Pass();
 		}
 	}
