@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class StoreManager : MonoBehaviour
 {
-
     public GameObject player;
 
     public GameObject SkinCanvas1;
@@ -38,17 +37,31 @@ public class StoreManager : MonoBehaviour
     public Button Button6;
     public Button ButtonRandom;
 
+    public Text buttonText1;
+    public Text buttonText2;
+    public Text buttonText3;
+    public Text buttonText4;
+    public Text buttonText5;
+    public Text buttonText6;
+
     private Button[] buttons;
-    private string[] owned;
+    private string[] keys;
+    private Text[] texts;
 
     void Start()
     {
+        //initialise the player pref int value to indicate green skin is owned by default
         PlayerPrefs.SetInt("Green Slime", 1);
-        PlayerPrefs.SetInt("Current Skin", 0);
-        PlayerPrefs.SetInt("Random Select", 0);
+
+        //put all Buttons, Texts and PlayerPref skin availability indicator into arrays
         buttons = new Button[] { Button1, Button2, Button3, Button4, Button5, Button6, ButtonRandom };
-        owned = new string[] { "Green Slime", "Blue Slime", "Light Blue Slime", "Orange Slime", "Purple Slime", "Red Slime", "Random Select" };
+        keys = new string[] { "Green Slime", "Blue Slime", "Light Blue Slime", "Orange Slime", "Purple Slime", "Red Slime", "Random Select" };
+        texts = new Text[] { buttonText1, buttonText2, buttonText3, buttonText4, buttonText5, buttonText6 };
+
+        //update the wallet coin count
         CoinCount1.text = PlayerPrefs.GetInt("coinCount").ToString();
+
+        //refresh the button states
         conditionalOnAndOff();
     }
 
@@ -172,10 +185,12 @@ public class StoreManager : MonoBehaviour
 
     public void applySkin(int skinNum)
     {
+        //Take corresponding actions when apply buttons are clicked
+        //Set the Current Skin PlayerPrefs int value to the skin's corresponding number each time apply button is pressed
+        //so that the skin of the flubba can be globally accessed
         switch (skinNum)
         {
             case 1:
-
                 ButtonChange("Green Slime", Skin1, Button1, 100, CoinCount1, skinNum);
                 PlayerPrefs.SetInt("Current Skin", 1);
                 break;
@@ -212,16 +227,14 @@ public class StoreManager : MonoBehaviour
                 CoinCountRandom.text = PlayerPrefs.GetInt("coinCount").ToString();
                 break;
         }
+
+        //refresh the buttons again to update the states
+        conditionalOnAndOff();
     }
 
     void conditionalOnAndOff()
     {
-
-        foreach (Button button in buttons)
-        {
-
-        }
-
+        //if the total coin count is less than 50, disable all the apply buttons
         if (PlayerPrefs.GetInt("coinCount") < 50)
         {
             ButtonRandom.interactable = false;
@@ -232,9 +245,12 @@ public class StoreManager : MonoBehaviour
             Button5.interactable = false;
             Button6.interactable = false;
         }
+        //if the total coin count is greater than 50, enable the apply button for random skin
         else
         {
             ButtonRandom.interactable = true;
+
+            //if the total coin count is less than 100, all buttons, other than the apply button in the random canvas, are disabled
             if (PlayerPrefs.GetInt("coinCount") < 100)
             {
                 Button1.interactable = false;
@@ -244,6 +260,7 @@ public class StoreManager : MonoBehaviour
                 Button5.interactable = false;
                 Button6.interactable = false;
             }
+            //if count is greater than 100, enable all the buttons
             else
             {
                 Button1.interactable = true;
@@ -254,18 +271,43 @@ public class StoreManager : MonoBehaviour
                 Button6.interactable = true;
             }
         }
+
+        for (int i = 0; i < keys.Length - 1; i++)
+        {
+            //loop through the PlayerPrefs skin availability indicator to see which one is owned
+            if (PlayerPrefs.GetInt(keys[i]) == 1)
+            {
+                //change the text of the button to select and enable it
+                texts[i].text = "Select";
+                buttons[i].interactable = true;
+            }
+            //if skin is not owned, the button should say "Apply"
+            else
+            {
+                texts[i].text = "Apply";
+            }
+        }
+
+        //at the end of the button checking process, make sure that currently used skin's text is changed and button is disabled
+        int currentSkin = PlayerPrefs.GetInt("Current Skin");
+        buttons[currentSkin - 1].interactable = false;
+        texts[currentSkin - 1].text = "Equipped";
     }
 
     void ButtonChange(string intName, Sprite skin, Button button, int price, Text wallet, int skinNum)
     {
+        //if the skin is already owned, just apply the skin
         if (PlayerPrefs.GetInt(intName) == 1)
         {
             player.GetComponent<SpriteRenderer>().sprite = skin;
         }
+        //if the skin is not owned yet, change the skin, set the skin's availability indicator to true
         else
         {
             player.GetComponent<SpriteRenderer>().sprite = skin;
             PlayerPrefs.SetInt(intName, 1);
+
+            //deduct 50 coins if the skin is selected by random, otherwise deduct 100
             if (PlayerPrefs.GetInt("Random Select") == 0)
             {
                 PlayerPrefs.SetInt("coinCount", PlayerPrefs.GetInt("coinCount") - price);
@@ -276,6 +318,7 @@ public class StoreManager : MonoBehaviour
                 PlayerPrefs.SetInt("Random Select", 0);
             }
             
+            //update the total coin count after the skin change
             wallet.text = PlayerPrefs.GetInt("coinCount").ToString();
         }
     }
