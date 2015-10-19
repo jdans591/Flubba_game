@@ -5,18 +5,8 @@ public class Level1Helper : MonoBehaviour {
 
 	public HelperText helperText;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-
-	void OnTriggerEnter2D(Collider2D other){
+	// Every time flubba reaches a checkpoint, change the message in the helpertext/dialogue
+	void OnTriggerEnter2D(Collider2D other) {
 		if (gameObject.tag == "Helper1") {
 			helperText.setText("Press spacebar to jump.");
 		} else if (gameObject.tag == "Helper2") {

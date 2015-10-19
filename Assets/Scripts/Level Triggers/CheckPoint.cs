@@ -6,17 +6,14 @@ public class CheckPoint : MonoBehaviour {
 	public LevelManager levelManager;
 	public bool isChecked = false;
 
-	// Use this for initialization
-	void Start () {
-		levelManager = FindObjectOfType<LevelManager> ();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	    
+	// Used for initialization
+	void Start() {
+		// Find the level manager and reference it
+		levelManager = FindObjectOfType<LevelManager>();
 	}
 
-	void OnTriggerEnter2D (Collider2D other) {
+	void OnTriggerEnter2D(Collider2D other) {
+		// If the player comes into contact with the checkpoint, set it as the current
 		if (other.gameObject.tag == "Player" && !isChecked) {
 			levelManager.currentCheckpoint = gameObject;
 			isChecked = true;

@@ -3,7 +3,8 @@ using System.Collections;
 
 public class FinishTrigger : MonoBehaviour {
 
-	void OnTriggerEnter2D () {
-		Application.LoadLevel (0);
+	// Return to main menu
+	void OnTriggerEnter2D() {
+		Application.LoadLevel(0);
 	}
 }

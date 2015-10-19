@@ -7,7 +7,7 @@ public class TimeSync : MonoBehaviour {
 	public TimeControl timeControl;
 	public PlayerInput playerInput;
 	public Text text;
-	public float delay;	
+	public float delay;
 
 	private float time;
 }
