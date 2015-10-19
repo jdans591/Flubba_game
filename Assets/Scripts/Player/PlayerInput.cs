@@ -169,7 +169,6 @@ public class PlayerInput : MonoBehaviour {
 
 		//When the jump button is pressed.
 		if ((Input.GetKeyDown (KeyCode.Space) && PlayerPrefs.GetInt("isReplay") == 0) || (jumpReplayInputs[counter].y > 0.5 && PlayerPrefs.GetInt("isReplay") == 1)) {
-            Debug.Log("Jump is pressed");
             //Simply jump if the object is on the ground. 
 			if (TouchingGround () || jumpDelay != 0) {
 				if (TouchingGround()) {
