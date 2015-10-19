@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor;
 
 public class EndMenu : MonoBehaviour {
 
@@ -76,31 +76,31 @@ public class EndMenu : MonoBehaviour {
 
     void GetBestTime() {
         string best;
-        string currentLevel = EditorApplication.currentScene;
+        string currentLevel = Application.loadedLevelName;
         // Check which level is currently in play
         switch (currentLevel) {
-            case "Assets/Scenes/Levels/level1.unity":
+            case "level1":
                 best = BestToString(PlayerPrefs.GetFloat("level1Best"));
                 // Check that a best time has been set
                 if (PlayerPrefs.GetFloat("level1Best") != 0) {
                     bestTimeText.text = best;
                 }
                 break;
-            case "Assets/Scenes/Levels/level2.unity":
+            case "level2":
                 best = BestToString(PlayerPrefs.GetFloat("level2Best"));
                 // Check that a best time has been set
                 if (PlayerPrefs.GetFloat("level2Best") != 0) {
                     bestTimeText.text = best;
                 }
                 break;
-            case "Assets/Scenes/Levels/level3.unity":
+            case "level3":
                 best = BestToString(PlayerPrefs.GetFloat("level3Best"));
                 // Check that a best time has been set
                 if (PlayerPrefs.GetFloat("level3Best") != 0) {
                     bestTimeText.text = best;
                 }
                 break;
-            case "Assets/Scenes/Levels/level4.unity":
+            case "level4":
                 best = BestToString(PlayerPrefs.GetFloat("level4Best"));
                 // Check that a best time has been set
                 if (PlayerPrefs.GetFloat("level4Best") != 0) {

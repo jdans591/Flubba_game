@@ -123,8 +123,5 @@ public class EndPoint : MonoBehaviour {
 
 
         PlayerPrefs.SetString("replayString", replayString);
-
-
-        Debug.Log("Finished making replay string.");
     }
 }
