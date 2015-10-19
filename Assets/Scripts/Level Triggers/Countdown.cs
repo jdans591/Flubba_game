@@ -6,7 +6,6 @@ public class Countdown : MonoBehaviour {
 
 	public Text text;
 	private float time;
-
 	private float delay = 3;
 
 	void Start () {

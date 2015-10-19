@@ -8,6 +8,5 @@ public class TimeSync : MonoBehaviour {
 	public PlayerInput playerInput;
 	public Text text;
 	public float delay;	
-
 	private float time;
 }

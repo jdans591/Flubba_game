@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ResetProgress : MonoBehaviour {
 
-	// Use this for initialization
+	// Resets player progress from local storage
 	void Start () {
 
         PlayerPrefs.SetString("level2Locked", "true");

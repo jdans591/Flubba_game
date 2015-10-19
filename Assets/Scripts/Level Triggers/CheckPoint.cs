@@ -8,13 +8,8 @@ public class CheckPoint : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        //find the level manager and refernce it
+        //find the level manager and reference it
 		levelManager = FindObjectOfType<LevelManager> ();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	    
 	}
 
 	void OnTriggerEnter2D (Collider2D other) {

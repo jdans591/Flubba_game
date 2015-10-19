@@ -13,7 +13,6 @@ public class EndPoint : MonoBehaviour {
 	public bool isPaused;
     string level;
     float best;
-
     public string replayString = "";
 
 	// Use this for initialization

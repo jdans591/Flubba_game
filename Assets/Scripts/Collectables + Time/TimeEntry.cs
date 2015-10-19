@@ -9,30 +9,20 @@ public class TimeEntry : MonoBehaviour {
     public string guid;
     public GameObject ProgressCircle;
 
-    // Use this for initialization
-    void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-    // set the text inside player column
+    // Set the text inside player column
     public void setPlayer(string x)
     {
         Player.text = x;
     }
 
-    // set the tet inside time column
+    // Set the text inside time column
     public void setTIme(string y)
     {
         Time.text = y;
     }
 
 
-    // triggered upon button click. plays the replay of corresponding entry of leaderboard.
+    // Triggered upon button click, plays the replay of corresponding entry of leaderboard
     public void playReplay(int currentlevel)
     {
         Debug.Log("timelist guid: " + guid);

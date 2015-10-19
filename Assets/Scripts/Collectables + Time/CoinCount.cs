@@ -7,12 +7,12 @@ public class CoinCount : MonoBehaviour {
 	public int coinCount;
 	public Text text;
 
-	// Use this for initialization
+	// Initializes displayed coin count as 0
 	void Start () {
 		text.text = "Coins:0";
 	}
 	
-	// Update is called once per frame
+	// Display number of coins collected for current level
 	void Update () {
 		text.text = "Coins:" + coinCount.ToString ();
 	}

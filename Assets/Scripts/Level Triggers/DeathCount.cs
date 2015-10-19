@@ -6,7 +6,6 @@ public class DeathCount : MonoBehaviour {
 
 	public int deathCount;
 	public PlayerInput playerInput;
-
 	public Text text;
 
 	// Use this for initialization

@@ -5,17 +5,15 @@ using System.Collections;
 public class TimeControl : MonoBehaviour {
 
 	public Text text;
-
 	public float time;
     public static float coinCollected = 0;
-
 	private float delay;
 	private float minute;
 	private float second;
 	private bool playerCanMove;
     private bool stopTimer;
 
-	// Use this for initialization
+	// Initialize variables
 	void Start () {
 		text.text = "0";
 		playerCanMove = false;
@@ -24,9 +22,9 @@ public class TimeControl : MonoBehaviour {
         coinCollected = 0;
 	}
 	
-	// Update is called once per frame
+	// Set 3 second freeze before player can move
 	void Update () {
-		//Delay for 3 seconds before the player can move.
+		// Delay for 3 seconds before the player can move.
 		if (!playerCanMove) {
 			if (Time.timeSinceLevelLoad > delay) {
 				playerCanMove = true;
@@ -36,10 +34,10 @@ public class TimeControl : MonoBehaviour {
 		}
 	}
 
-	//FixedUpdate is called once every fixed interval
+	// FixedUpdate is called once every fixed interval
 	void FixedUpdate () {
 
-		//Delay for 3 seconds before the player can move.
+		// Delay for 3 seconds before the player can move.
 		if (!playerCanMove) {
 			text.text = "0:00.000";
 			return;
@@ -51,7 +49,7 @@ public class TimeControl : MonoBehaviour {
             minute = 0;
             second = time;
 
-            //Get the number of minutes and seconds if the time is over a minute.
+            // Get the number of minutes and seconds if the time is over a minute.
             if (second >= 60)
             {
                 minute = Mathf.Floor(time / 60);
@@ -70,7 +68,7 @@ public class TimeControl : MonoBehaviour {
                 }
             }
 
-            //time over a minute
+            // Time over a minute
             else if (time >= 60)
             {
                 if (minute < 10)
@@ -99,6 +97,7 @@ public class TimeControl : MonoBehaviour {
         }
 	}
 
+    // Stop the timer
     public void StopTimer()
     {
         stopTimer = true;

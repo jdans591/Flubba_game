@@ -18,11 +18,6 @@ public class SwingEnemy : MonoBehaviour {
 	void Start () {
         InvokeRepeating("Swing",3,0.02F);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
     void Swing()
     {
