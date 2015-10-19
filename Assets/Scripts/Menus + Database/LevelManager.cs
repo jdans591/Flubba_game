@@ -55,10 +55,12 @@ public class LevelManager : MonoBehaviour {
 		RespawnPlayer ();
 	}
 	
+    //respawn player to last saved checkpoint
 	public void RespawnPlayer () {
 		currentFlubba.transform.position = currentCheckpoint.transform.position;
 	}
 
+    //when player escapes level boundary execute death
 	void OnTriggerExit2D (Collider2D other) {
 		if (other.gameObject.tag == "Player") {
 			HandleDeath ();
