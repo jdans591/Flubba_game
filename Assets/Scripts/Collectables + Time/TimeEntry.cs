@@ -43,7 +43,7 @@ public class TimeEntry : MonoBehaviour {
     IEnumerator WaitForRequest(WWW www, int currentlevel)
     {
         yield return www;
-        System.IO.File.WriteAllText(@"C:\Users\Dhanasit\Documents\Unity_last\Sample3.txt", www.ToString());
+      
         // check for errors
         if (www.error == null)
         {
