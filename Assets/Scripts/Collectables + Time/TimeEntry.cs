@@ -29,7 +29,7 @@ public class TimeEntry : MonoBehaviour {
         Time.text = y;
     }
 
-    public void playReplay()
+    public void playReplay(int currentlevel)
     {
         Debug.Log("timelist guid: " + guid);
 
@@ -37,11 +37,11 @@ public class TimeEntry : MonoBehaviour {
 
         string url = "https://microsoft-apiapp72ef49a46b6242d28d294f2cda80c2cf.azurewebsites.net/api/Replays?fileid="+guid;
         WWW www = new WWW(url);
-        StartCoroutine(WaitForRequest(www));
+        StartCoroutine(WaitForRequest(www, currentlevel));
 
     }
 
-    IEnumerator WaitForRequest(WWW www)
+    IEnumerator WaitForRequest(WWW www, int currentlevel)
     {
         yield return www;
         // check for errors
