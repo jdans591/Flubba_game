@@ -15,11 +15,6 @@ public class LeaderboardManager : MonoBehaviour {
     // Hides the current leaderboard and shows the next (if forward button pressed) or previous (if back button pressed) leaderboard
     public void ChangeLeaderboard (int lvl) {
 
-        //CanvasLevel1 = GameObject.Find("CanvasLevel1");
-        //CanvasLevel2 = GameObject.Find("CanvasLevel2");
-        //CanvasLevel3 = GameObject.Find("CanvasLevel3");
-        //CanvasLevel4 = GameObject.Find("CanvasLevel4");
-
         switch (lvl) {
             // Level 1 next
             case 1:

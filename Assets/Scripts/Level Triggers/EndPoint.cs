@@ -23,24 +23,26 @@ public class EndPoint : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D (Collider2D other) {
-		if (other.tag == "Player") { //when flubba reaches end of level.
+        //when flubba reaches end of level.
+        if (other.tag == "Player") { 
 
         // Update level select GUI to show player progress through each of the 4 different levels
         UpdateProgress();
 
-            PlaySound (0);
-			pauseMenu.disabled = true;
+            PlaySound (0); //play sfx
+			pauseMenu.disabled = true; //disable pausing of the game via esc button press
             UpdateCoinCount(endMenu.coinCount.coinCount);
 
-            endMenu.timeControl.StopTimer();
+            endMenu.timeControl.StopTimer(); //stop the timer
 			endMenu.display ();
-			endMenuCanvas.SetActive (true);
+			endMenuCanvas.SetActive (true); //displayed the end screen
 
-            other.gameObject.SetActive(false);
+            other.gameObject.SetActive(false); //disable flubba to prevent further action and disappear into pipe
 
             //Create the replay string to send to database.
             MakeReplayString();
 
+            //if isReplay is set to true, set it back to false
             if(PlayerPrefs.GetInt("isReplay") == 1)
             {
                 PlayerPrefs.SetInt("isReplay", 0);
@@ -94,6 +96,7 @@ public class EndPoint : MonoBehaviour {
         PlayerPrefs.SetInt("coinCount", total);
     }
 
+    //play given sound clip
     void PlaySound (int clip) {
 		audio.clip = audioClip [clip];
 		audio.Play ();
