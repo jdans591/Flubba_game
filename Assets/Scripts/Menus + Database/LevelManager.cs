@@ -7,6 +7,8 @@ public class LevelManager : MonoBehaviour {
 	public GameObject currentCheckpoint;
 	public AudioClip deathAudioClip;
 
+    private AudioSource audio;
+	public GameObject currentFlubba;
 	public GameObject green;
 	public GameObject lightblue;
 	public GameObject blue;
@@ -14,8 +16,6 @@ public class LevelManager : MonoBehaviour {
 	public GameObject orange;
 	public GameObject purple;
 
-	private AudioSource audio;
-	private GameObject currentFlubba;
 	private GameObject flubba;
 
 	void Awake () {
